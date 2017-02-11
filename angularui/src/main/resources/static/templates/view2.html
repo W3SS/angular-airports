@@ -1,0 +1,15 @@
+<div class="container">
+	<h2>View 2</h2>
+	
+	Country or City Name: 
+	<br />
+	<input type="text" ng-model="filter.name"/>
+	
+	<br />
+	<ul>
+		<li ng-repeat="capital in capitals | filter:filter.name | orderBy:'country'">{{ capital.city | uppercase }} - {{ capital.country | lowercase }}</li>
+	</ul>
+		
+	<br />
+	<a href="#/view1">View 1</a>
+</div>

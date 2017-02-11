@@ -1,0 +1,28 @@
+<div class="container">
+	<h2>View 1</h2>
+	
+	Country or City Name: 
+	<br />
+	<input type="text" ng-model="filter.name"/>
+	
+	<br />
+	<ul>
+		<li ng-repeat="capital in capitals | filter:filter.name | orderBy:'country'">{{ capital.city | uppercase }} - {{ capital.country | lowercase }}</li>
+	</ul>
+	
+	<br />
+	New City: 
+	<br />
+	<input type="text" ng-model="newCapital.city"/>
+	
+	<br />
+	New Country: 
+	<br />
+	<input type="text" ng-model="newCapital.country"/>
+	
+	<br />
+	<button name="Submit" ng-click="addCapital()">Add Capital</button>
+	
+	<br />
+	<a href="#/view2">View 2</a>
+</div>

@@ -1,4 +1,4 @@
-# Angular Airports - An Airport Search Tool SPA Using Spring Boot and Angular 1.x
+# Angular Airports - An Airport Search SPA Using Spring Boot and Angular 1.x
 
 ## About
 

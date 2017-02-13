@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.chrisali</groupId>
-	<artifactId>airportinfo</artifactId>
+	<artifactId>airportinfo-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>airportinfo</name>
-	<description>Airport Information</description>
+	<name>airportinfo-service</name>
+	<description>Airport Information Microservice</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

@@ -16,7 +16,7 @@
 
 ## Sources
 
-- NOAA's Aviation Digital Data Service (ADDS) Text Data Server is used to provide weather info ( http://aviationweather.gov/dataserver )
+- AVWX's REST API provides weather data for the selected airport ( https://avwx.rest )
 
 - A data dump from OpenFlights' airport database provides data to seed the app's H2 database ( http://openflights.org/data.html )
 

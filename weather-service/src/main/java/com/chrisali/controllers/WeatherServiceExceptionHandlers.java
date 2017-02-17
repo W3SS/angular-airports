@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 
 @ControllerAdvice
 public class WeatherServiceExceptionHandlers {
@@ -72,8 +73,20 @@ public class WeatherServiceExceptionHandlers {
 		info.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
 		info.setHtml("");
 		
-		logger.error("Internal error processing request");
+		logger.error("Internal error processing request: " + ex.getMessage());
 		
 		return new ResponseEntity<ErrorInfo>(info, HttpStatus.REQUEST_TIMEOUT);
+	}
+	
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ResponseEntity<ErrorInfo> handleException(HttpMessageNotReadableException ex) {
+		ErrorInfo info = new ErrorInfo();
+		info.setMessage("There was an error reading the host's message");
+		info.setStatusCode(HttpStatus.UNPROCESSABLE_ENTITY.toString());
+		info.setHtml("");
+		
+		logger.error("Unable to read HTTP request: " + ex.getMessage());
+		
+		return new ResponseEntity<ErrorInfo>(info, HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 }

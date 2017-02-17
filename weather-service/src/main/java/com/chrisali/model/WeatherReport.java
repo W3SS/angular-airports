@@ -1,24 +1,38 @@
 package com.chrisali.model;
 
-import java.util.Map;
 import java.util.List;
-import lombok.Data;
+import java.util.Map;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import lombok.Data;
 
 @Data
 @JsonInclude(Include.NON_NULL)
 public class WeatherReport {
 	
 	@JsonProperty("Station")
-	private String station;
+	protected String station;
+	
+	@JsonProperty("Time")
+	protected String time;
 	
 	@JsonProperty("Info")
-	private Map<String, String> info;
+	protected Map<String, String> info;
 	
 	@JsonProperty("Raw-Report")
-	private String rawReport;
+	protected String rawReport;
+	
+	@JsonProperty("Units")
+	protected Map<String, String> units;
+	
+	@JsonProperty("Error")
+	protected String error;
+	
+	@JsonProperty("Remarks")
+	protected String remarks;
 	
 	@JsonProperty("Temperature")	
 	private String temperature;
@@ -44,9 +58,6 @@ public class WeatherReport {
 	@JsonProperty("Altimeter")
 	private String altimeter;
 	
-	@JsonProperty("Remarks")
-	private String remarks;
-	
 	@JsonProperty("Remarks-Info")
 	private Map<String, String> remarksInfo;
 	
@@ -67,10 +78,4 @@ public class WeatherReport {
 	
 	@JsonProperty("Translations")
 	private Map<String, String> translations;
-	
-	@JsonProperty("Units")
-	private Map<String, String> units;
-	
-	@JsonProperty("Error")
-	private String error;
 }

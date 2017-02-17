@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class StationNotFoundException extends Exception {
 	
 	public StationNotFoundException(WeatherReport report) {
-		super(report.getError());
+		super (report.getError());
+	}
+	
+	public StationNotFoundException(WeatherForecast forecast) {
+		super (forecast.getError());
 	}
 }

@@ -58,4 +58,25 @@ public class WeatherControllerTests {
 				.andExpect(jsonPath("$.message", notNullValue()))
 				.andExpect(jsonPath("$.statusCode", is("400")));
 	}
+	
+	@Test
+	public void getWeatherForecastTest() throws Exception {
+		assertThat(weatherController).isNotNull();
+		
+		String icaoCode = "kttn";
+		mockMvc.perform(get("/weather/forecast/icao/{icaoCode}", icaoCode))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.Station", is("KTTN")));
+	}
+	
+	@Test
+	public void getWeatherForecastTestNotFound() throws Exception {
+		assertThat(weatherController).isNotNull();
+		
+		String icaoCode = "ktttttn";
+		mockMvc.perform(get("/weather/forecast/icao/{icaoCode}", icaoCode))
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.message", notNullValue()))
+				.andExpect(jsonPath("$.statusCode", is("400")));
+	}
 }

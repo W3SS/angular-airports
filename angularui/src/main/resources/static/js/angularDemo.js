@@ -11,19 +11,19 @@ app
 					controller: 'capitalController',
 					templateUrl: '../templates/view1.html'
 				})
-			.when('/view2',
+			.when('/search',
 				{
 					controller: 'capitalController',
-					templateUrl: '../templates/view2.html'
+					templateUrl: '../templates/view3.html'
 				})
-			.when('/view3',
+			.when('/view',
 				{
 					controller: 'airportController',
-					templateUrl: '../templates/view3.html'
+					templateUrl: '../templates/view2.html'
 				})
 			.otherwise(
 				{ 
-					redirectTo: '/view1' 
+					redirectTo: '/search' 
 				}
 			);
 	})
@@ -55,7 +55,9 @@ app
 		$scope.init = function() {
 			$scope.airports = airportFactory.airports;
 			$scope.report = weatherFactory.report;
-			$scope.forecast = weatherFactory.forecast;			
+			$scope.forecast = weatherFactory.forecast;
+			
+			$scope.selected = {};
 		}
 		
 		$scope.init();
@@ -83,6 +85,13 @@ app
 					function(error) { }
 				);
 		};
+		
+		$scope.selectAirport = function(selectedIcao) {
+			$scope.selected = selectedIcao;
+			$scope.selectedAirport = $scope.getAirports(selectedIcao)[0];
+			$scope.getReport(selectedIcao);
+			$scope.getForecast(selectedIcao);
+		}
 	});
 
 // ======================================

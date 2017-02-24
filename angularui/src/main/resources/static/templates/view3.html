@@ -1,7 +1,6 @@
 <div class="container">
-	<h2>View 3</h2>
+	<h2>Search for an Airport</h2>
 	
-	Country or City Name: 
 	<br />
 	<input type="text" ng-model="query"/>
 	
@@ -18,15 +17,13 @@
 			<td>ICAO Code</td>
 		</th>
 		<tr ng-repeat="airport in airports | orderBy:'airportName'">
-			<td>{{ airport.city }}</td>
-			<td>{{ airport.country }}</td>
-			<td>{{ airport.airportName }}</td>
-			<td>{{ airport.icaoCode }}</td>
+			<td></td>
+			<td><a href="#/{{ airport.icaoCode }}">{{ airport.city }}</a></td>
+			<td><a href="#/{{ airport.icaoCode }}">{{ airport.country }}</a></td>
+			<td><a href="#/{{ airport.icaoCode }}">{{ airport.airportName }}</a></td>
+			<td><a href="#/{{ airport.icaoCode }}">{{ airport.icaoCode }}</a></td>
 		</tr>
 	</table>
-	<ul>
-		<li ng-repeat="airport in airports | orderBy:'airportName'">{{airport.city}}, {{airport.country}} - {{airport.airportName}} ({{airport.icaoCode}})</li>
-	</ul>
 	
 	<br />
 	<a href="#/view2">View 1</a>

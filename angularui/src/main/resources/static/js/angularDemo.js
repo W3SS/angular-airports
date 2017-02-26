@@ -81,7 +81,7 @@ app
 		$scope.getForecast = function () {
 			airportFactory.getForecastByIcao($scope.icaoCode)
 				.then(
-					function(result) { $scope.report = result; },
+					function(result) { $scope.forecast = result; },
 					function(error) { }
 				);
 		};

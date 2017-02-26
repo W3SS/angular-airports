@@ -2,60 +2,97 @@
 	<h2>Information for {{ selectedAirport.airportName }} ({{ selectedAirport.icaoCode }})</h2>
 	
 	<br />
-	<a href="#">Home</a>
+	<a href="#">Home
 	
-	<br />
+	<br /><br />
 	<table>
 		<tr>
 			<td>City:</td>
-			<td>{{ selectedAirport.city }}</a></td>
+			<td>{{ selectedAirport.city }}</td>
 		</tr>
 		<tr>
 			<td>Country:</td>
-			<td>{{ selectedAirport.country }}</a></td>
+			<td>{{ selectedAirport.country }}</td>
 		</tr>
 		<tr>
 			<td>Lattitude:</td>
-			<td>{{ selectedAirport.lattitude }}</a></td>
+			<td>{{ selectedAirport.lattitude }}</td>
 		</tr>
 		<tr>
 			<td>Longitude:</td>
-			<td>{{ selectedAirport.longitude }}</a></td>
+			<td>{{ selectedAirport.longitude }}</td>
 		</tr>
 		<tr>
 			<td>Longitude:</td>
-			<td>{{ selectedAirport.longitude }}</a></td>
+			<td>{{ selectedAirport.longitude }}</td>
 		</tr>
 		<tr>
 			<td>Altitude:</td>
-			<td>{{ selectedAirport.altitude }}</a></td>
+			<td>{{ selectedAirport.altitude }}</td>
 		</tr>
 	</table>
 	
+	<br /><br />
+
 	<table>
 		<tr>
-			<td>City:</td>
-			<td>{{ selectedAirport.city }}</a></td>
+			<td>Time:</td>
+			<td>{{ report.time }}</td>
 		</tr>
 		<tr>
-			<td>Country:</td>
-			<td>{{ selectedAirport.country }}</a></td>
+			<td>Flight Rules:</td>
+			<td>{{ report.flightRules }}</td>
 		</tr>
 		<tr>
-			<td>Lattitude:</td>
-			<td>{{ selectedAirport.lattitude }}</a></td>
+			<td>Wind:</td>
+			<td>{{ report.translations.Wind }}</td>
 		</tr>
 		<tr>
-			<td>Longitude:</td>
-			<td>{{ selectedAirport.longitude }}</a></td>
+			<td>Clouds:</td>
+			<td>{{ report.translations.Clouds }}</td>
 		</tr>
 		<tr>
-			<td>Longitude:</td>
-			<td>{{ selectedAirport.longitude }}</a></td>
+			<td>Temperature:</td>
+			<td>{{ report.translations.Temperature }}</td>
 		</tr>
 		<tr>
-			<td>Altitude:</td>
-			<td>{{ selectedAirport.altitude }}</a></td>
+			<td>Dewpoint:</td>
+			<td>{{ report.translations.Dewpoint }}</td>
+		</tr>
+		<tr>
+			<td>Visibility:</td>
+			<td>{{ report.translations.Visibility }}</td>
+		</tr>
+		<tr>
+			<td>Other:</td>
+			<td>{{ report.translations.Other }}</td>
+		</tr>
+	</table>
+
+	<br /><br />
+
+	<table>
+		<tr>
+			<td>Forecast Taken At:</td>
+			<td>{{ forecast.time }}</td>
+		</tr>
+	</table>
+	<table ng-repeat="forecastEntry in forecast.forecast | orderBy forecastEntry.startTime ">
+		<tr>
+			<td>From:</td>
+			<td>{{ forecastEntry.fromTime }}</td>
+		</tr>
+		<tr>
+			<td>To:</td>
+			<td>{{ forecastEntry.toTime }}</td>
+		</tr>
+		<tr>
+			<td>Flight Rules:</td>
+			<td>{{ forecastEntry.flightRules }}</td>
+		</tr>
+		<tr>
+			<td>From:</td>
+			<td>{{ forecastEntry.summary }}</td>
 		</tr>
 	</table>
 </div>

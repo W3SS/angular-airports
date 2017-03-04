@@ -13,13 +13,13 @@ app
 				})
 			.when('/search',
 				{
-					controller: 'capitalController',
-					templateUrl: '../templates/view3.html'
+					controller: 'airportSearchController',
+					templateUrl: '../templates/airportsearch.html'
 				})
-			.when('/view',
+			.when('/view/:airportId',
 				{
-					controller: 'airportController',
-					templateUrl: '../templates/view2.html'
+					controller: 'airportDetailsController',
+					templateUrl: '../templates/viewairport.html'
 				})
 			.otherwise(
 				{ 
@@ -51,25 +51,36 @@ app
 		};
 	})
 
-	.controller('airportController', function($scope, airportFactory, weatherFactory) {
+	.controller('airportSearchController', function($scope, airportFactory) {
 		$scope.init = function() {
-			$scope.airports = airportFactory.airports;
-			$scope.report = weatherFactory.report;
-			$scope.forecast = weatherFactory.forecast;
-			
-			$scope.selected = {};
+			$scope.airportResults = airportFactory.airportResults;
 		}
 		
 		$scope.init();
 		
-		$scope.getAirports = function () {
+		$scope.getAirportResults = function () {
 			airportFactory.getAirportsByQuery($scope.query)
-				.then(
-					function(result) { $scope.airports = result; },
+				.then (
+					function(result) { $scope.airportResults = result; },
 					function(error) { }
 				);
 		};
+	})
+
+	.controller('airportDetailsController', function($scope, $routeParams, airportFactory, weatherFactory) {
+		$scope.init = function() {
+			$scope.selectedAirport = airportFactory.getAirportById($routeParams.airportId);
+			/*
+			$scope.report = airportFactory.report;
+			weatherFactory.getReportByIcao($scope.selectedAirport.icaoCode);
+
+			$scope.forecast = airportFactory.forecast;
+			weatherFactory.getForecastByIcao($scope.selectedAirport.icaoCode);
+			*/
+		}
 		
+		$scope.init();
+
 		$scope.getReport = function () {
 			airportFactory.getReportByIcao($scope.icaoCode)
 				.then(
@@ -85,46 +96,57 @@ app
 					function(error) { }
 				);
 		};
-		
-		$scope.selectAirport = function(selectedIcao) {
-			$scope.selected = selectedIcao;
-			$scope.selectedAirport = $scope.getAirports(selectedIcao)[0];
-			$scope.getReport(selectedIcao);
-			$scope.getForecast(selectedIcao);
-		}
 	});
 
 // ======================================
 //           Factories
 // ======================================
 app
-	.factory('airportFactory', ['$http', '$q', '$log', '$rootScope', function($http, $q, $log, $rootScope) {
+	.factory('airportFactory', function($http, $q, $log, $rootScope) {
 		var factory = {};
 		
-		var airports = {};
+		var airportResults = {};
+		var airport = {};
 		
-		var urlRoot = $rootScope.airportServiceEndpoint + "airports/search/";
+		var urlRootSearch = $rootScope.airportServiceEndpoint + "airports/search/";
+		var urlRootSingle = $rootScope.airportServiceEndpoint + "airports/get/";
 		
 		factory.getAirportsByQuery = function(query) {
 			var defer = $q.defer(); 
 			
-			$http.get(urlRoot + query)
+			$http.get(urlRootSearch + query)
 				.success(function(response) {
-					airports = response;
+					airportResults = response;
 					defer.resolve(response);
 				})
-				.error (function(error) {
+				.error(function(error) {
 					defer.reject(error);
 					$log.error("Error! " + error.message);
 				});
 			
 			return defer.promise;
 		};
+
+		factory.getAirportById = function(id) {
+			var defer = $q.defer();
+
+			$http.get(urlRootSingle + id)
+				.success(function(response) {
+					airport = response;
+					defer.resolve(response);
+				})
+				.error(function(error) {
+					defer.reject(error);
+					$log.error("Error! " + error.message);
+				});
+
+			return defer.promise;
+		}
 		
 		return factory;
-	}])
+	})
 
-	.factory('weatherFactory', function($http, $rootScope) {
+	.factory('weatherFactory', function($http, $q, $log, $rootScope) {
 		var factory = {};
 		
 		var report = {};
@@ -141,7 +163,7 @@ app
 					report = response;
 					defer.resolve(response);
 				})
-				.error (function(error) {
+				.error(function(error) {
 					defer.reject(error);
 					$log.error("Error! " + error.message);
 				});
@@ -157,7 +179,7 @@ app
 					forecast = response;
 					defer.resolve(response);
 				})
-				.error (function(error) {
+				.error(function(error) {
 					defer.reject(error);
 					$log.error("Error! " + error.message);
 				});

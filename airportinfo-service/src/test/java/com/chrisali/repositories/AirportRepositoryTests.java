@@ -47,4 +47,21 @@ public class AirportRepositoryTests {
 		
 		assertNotNull(airportSearch);
 	}
+
+	@Test
+	public void getAirportByIdTests() {
+		String query = "kttn";
+		List<Airport> airportSearch = airportRepository.find(query);
+
+		assertNotNull(airportSearch);
+		assertEquals("1 Airport result should be returned for query " + query, 1, airportSearch.size());
+
+		Airport airportFromList = airportSearch.get(0);
+		assertNotNull(airportFromList);
+
+		Airport retrievedAirport = airportRepository.getOne(airportFromList.getId());
+		assertNotNull(retrievedAirport);
+
+		assertEquals("Retrieved airport should equal airport from list", airportFromList.getAirportName(), retrievedAirport.getAirportName());
+	}
 }

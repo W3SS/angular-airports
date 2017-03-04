@@ -23,4 +23,9 @@ public class AirportController {
 	public List<Airport> searchAirportsByQuery(@PathVariable(value = "query") String query) {
 		return query.length() > 2 ? airportRepository.find(query) : new ArrayList<Airport>();
 	}
+
+	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
+	public Airport getAiportById(@PathVariable(value = "id") Long id) {
+		return airportRepository.getOne(id);
+	}
 }

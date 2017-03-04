@@ -62,4 +62,19 @@ public class AirportControllerTests {
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$", hasSize(0)));
 	}
+
+	@Test
+	public void getAirportTest() throws Exception {
+		assertThat(airportController).isNotNull();
+
+		Long id = 1L;
+		mockMvc.perform(get("/airports/get/{id}", id))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.id", is(1)))
+				.andExpect(jsonPath("$.airportName", is("Goroka Airport")));
+
+		id = 999999L;
+		mockMvc.perform(get("/airports/get/{id}", id))
+				.andExpect(status().isNotFound());
+	}
 }

@@ -2,11 +2,13 @@ package com.chrisali.model;
 
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "airports")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Airport {
 	
 	@Id

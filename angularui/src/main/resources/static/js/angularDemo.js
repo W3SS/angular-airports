@@ -52,12 +52,12 @@ app
 	})
 
 	.controller('airportSearchController', function($scope, airportFactory) {
+		$scope.airportResults = [];
+		
 		$scope.init = function() {
 			$scope.airportResults = airportFactory.airportResults;
 		}
-		
-		$scope.init();
-		
+
 		$scope.getAirportResults = function () {
 			airportFactory.getAirportsByQuery($scope.query)
 				.then (
@@ -65,37 +65,43 @@ app
 					function(error) { }
 				);
 		};
+		
+		$scope.init();
 	})
 
 	.controller('airportDetailsController', function($scope, $routeParams, airportFactory, weatherFactory) {
+		
+		$scope.selectedAirport = {};
+		$scope.report = {};
+		$scope.forecast = {};
+		
+		$scope.getAirport = function () {
+			return airportFactory.getAirportById($routeParams.airportId)
+				.then(
+					function(result) { 
+						$scope.selectedAirport = result;
+						return result.icaoCode;
+					}
+				);
+		}, 
+		getWeather = function (icaoCode) {
+			weatherFactory.getReportByIcao(icaoCode)
+				.then(
+					function(result) { $scope.report = result; }
+				);
+				
+			weatherFactory.getForecastByIcao(icaoCode)
+				.then(
+					function(result) { $scope.forecast = result; }
+				);
+		};
+		
 		$scope.init = function() {
-			$scope.selectedAirport = airportFactory.getAirportById($routeParams.airportId);
-			/*
-			$scope.report = airportFactory.report;
-			weatherFactory.getReportByIcao($scope.selectedAirport.icaoCode);
-
-			$scope.forecast = airportFactory.forecast;
-			weatherFactory.getForecastByIcao($scope.selectedAirport.icaoCode);
-			*/
+			$scope.getAirport()
+				.then(getWeather);
 		}
 		
 		$scope.init();
-
-		$scope.getReport = function () {
-			airportFactory.getReportByIcao($scope.icaoCode)
-				.then(
-					function(result) { $scope.report = result; },
-					function(error) { }
-				);
-		};
-		
-		$scope.getForecast = function () {
-			airportFactory.getForecastByIcao($scope.icaoCode)
-				.then(
-					function(result) { $scope.forecast = result; },
-					function(error) { }
-				);
-		};
 	});
 
 // ======================================
@@ -152,7 +158,7 @@ app
 		var report = {};
 		var forecast = {};
 		
-		var urlRoot = $rootScope.weatherServiceEndpoint + "/weather/";
+		var urlRoot = $rootScope.weatherServiceEndpoint + "weather/";
 		var type = ["report", "forecast"];
 		
 		factory.getReportByIcao = function(icaoCode) {

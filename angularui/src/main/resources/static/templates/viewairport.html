@@ -15,12 +15,8 @@
 			<td>{{ selectedAirport.country }}</td>
 		</tr>
 		<tr>
-			<td>Lattitude:</td>
-			<td>{{ selectedAirport.lattitude }}</td>
-		</tr>
-		<tr>
-			<td>Longitude:</td>
-			<td>{{ selectedAirport.longitude }}</td>
+			<td>Latitude:</td>
+			<td>{{ selectedAirport.latitude }}</td>
 		</tr>
 		<tr>
 			<td>Longitude:</td>
@@ -45,27 +41,27 @@
 		</tr>
 		<tr>
 			<td>Wind:</td>
-			<td>{{ report.translations.Wind }}</td>
+			<td>{{ report.Translations.Wind }}</td>
 		</tr>
 		<tr>
 			<td>Clouds:</td>
-			<td>{{ report.translations.Clouds }}</td>
+			<td>{{ report.Translations.Clouds }}</td>
 		</tr>
 		<tr>
 			<td>Temperature:</td>
-			<td>{{ report.translations.Temperature }}</td>
+			<td>{{ report.Translations.Temperature }}</td>
 		</tr>
 		<tr>
 			<td>Dewpoint:</td>
-			<td>{{ report.translations.Dewpoint }}</td>
+			<td>{{ report.Translations.Dewpoint }}</td>
 		</tr>
 		<tr>
 			<td>Visibility:</td>
-			<td>{{ report.translations.Visibility }}</td>
+			<td>{{ report.Translations.Visibility }}</td>
 		</tr>
 		<tr>
 			<td>Other:</td>
-			<td>{{ report.translations.Other }}</td>
+			<td>{{ report.Translations.Other }}</td>
 		</tr>
 	</table>
 
@@ -74,25 +70,25 @@
 	<table>
 		<tr>
 			<td>Forecast Taken At:</td>
-			<td>{{ forecast.time }}</td>
+			<td>{{ forecast.Time }}</td>
 		</tr>
 	</table>
-	<table ng-repeat="forecastEntry in forecast.forecast | orderBy: 'forecastEntry.startTime' ">
+	<table ng-repeat="forecastEntry in forecast.Forecast | orderBy: 'forecastEntry.Start-Time' ">
 		<tr>
 			<td>From:</td>
-			<td>{{ forecastEntry.fromTime }}</td>
+			<td>{{ forecastEntry.Start-Time }}</td>
 		</tr>
 		<tr>
 			<td>To:</td>
-			<td>{{ forecastEntry.toTime }}</td>
+			<td>{{ forecastEntry.End-Time }}</td>
 		</tr>
 		<tr>
 			<td>Flight Rules:</td>
-			<td>{{ forecastEntry.flightRules }}</td>
+			<td>{{ forecastEntry.Flight-Rules }}</td>
 		</tr>
 		<tr>
 			<td>From:</td>
-			<td>{{ forecastEntry.summary }}</td>
+			<td>{{ forecastEntry.Summary }}</td>
 		</tr>
 	</table>
 </div>

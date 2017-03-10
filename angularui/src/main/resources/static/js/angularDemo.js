@@ -84,6 +84,7 @@ app
 					}
 				);
 		}, 
+		
 		getWeather = function (icaoCode) {
 			weatherFactory.getReportByIcao(icaoCode)
 				.then(

@@ -29,15 +29,23 @@
 	</table>
 	
 	<br /><br />
+	
+	<h3>Current Weather Conditions</h3>
 
+	<br /><br />
+	
+	<h4>{{ report["Raw-Report"] }}</h4>
+	
+	<br /><br />
+	
 	<table>
 		<tr>
 			<td>Time:</td>
-			<td>{{ report.time }}</td>
+			<td>{{ report.Time }}</td>
 		</tr>
 		<tr>
 			<td>Flight Rules:</td>
-			<td>{{ report.flightRules }}</td>
+			<td>{{ report["Flight-Rules"] }}</td>
 		</tr>
 		<tr>
 			<td>Wind:</td>
@@ -66,29 +74,56 @@
 	</table>
 
 	<br /><br />
+	
+	<h3>Forecast Weather Conditions</h3>
 
+	<br /><br />
+	
 	<table>
 		<tr>
 			<td>Forecast Taken At:</td>
 			<td>{{ forecast.Time }}</td>
 		</tr>
 	</table>
-	<table ng-repeat="forecastEntry in forecast.Forecast | orderBy: 'forecastEntry.Start-Time' ">
-		<tr>
-			<td>From:</td>
-			<td>{{ forecastEntry.Start-Time }}</td>
-		</tr>
-		<tr>
-			<td>To:</td>
-			<td>{{ forecastEntry.End-Time }}</td>
-		</tr>
-		<tr>
-			<td>Flight Rules:</td>
-			<td>{{ forecastEntry.Flight-Rules }}</td>
-		</tr>
-		<tr>
-			<td>From:</td>
-			<td>{{ forecastEntry.Summary }}</td>
-		</tr>
+	
+	<br />
+	
+	<h4>{{ forecast["Raw-Report"] }}</h4>
+	
+	<br />
+	
+	<table>
+		<tbody ng-repeat="Forecast in forecast.Forecast | orderBy: 'Forecast.Start-Time' ">
+			<tr>
+				<td>From:</td>
+				<td>{{ Forecast["Start-Time"] }}</td>
+			</tr>
+			<tr>
+				<td>To:</td>
+				<td>{{ Forecast["End-Time"] }}</td>
+			</tr>
+			<tr>
+				<td>Flight Rules:</td>
+				<td>{{ Forecast["Flight-Rules"] }}</td>
+			</tr>
+		</tbody>
+		<tbody ng-repeat="Forecast in forecast.Translations.Forecast">
+			<tr>
+				<td>Clouds:</td>
+				<td>{{ Forecast.Clouds }}</td>
+			</tr>
+			<tr>
+				<td>Visibility:</td>
+				<td>{{ Forecast.Visibility }}</td>
+			</tr>
+			<tr>
+				<td>Wind:</td>
+				<td>{{ Forecast.Wind }}</td>
+			</tr>
+			<tr>
+				<td>Other:</td>
+				<td>{{ Forecast.Other }}</td>
+			</tr>
+		</tbody>
 	</table>
 </div>

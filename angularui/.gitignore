@@ -22,3 +22,8 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+### Node Tools ###
+node_modules/
+bower_components/
+vendor/

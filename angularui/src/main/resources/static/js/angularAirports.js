@@ -6,11 +6,6 @@ var app = angular.module('app', ['ngRoute']);
 app
 	.config(function ($routeProvider) {
 		$routeProvider
-			.when('/view1',
-				{
-					controller: 'capitalController',
-					templateUrl: '../templates/view1.html'
-				})
 			.when('/search',
 				{
 					controller: 'airportSearchController',
@@ -37,20 +32,6 @@ app
 //           Controllers
 // ======================================
 app
-	.controller('capitalController', function($scope, capitalFactory) {
-		$scope.capitals = [];
-		
-		init();
-		
-		function init() {
-			$scope.capitals = capitalFactory.getCapitals();
-		}
-		
-		$scope.addCapital = function() {
-			capitalFactory.addCapital($scope.newCapital.city, $scope.newCapital.country);
-		};
-	})
-
 	.controller('airportSearchController', function($scope, airportFactory) {
 		$scope.airportResults = [];
 		
@@ -192,30 +173,6 @@ app
 				});
 			
 			return defer.promise;
-		};
-		
-		return factory;
-	})
-
-	.factory('capitalFactory', function() {
-		var factory = {};
-		var capitals = [
-			{city:'Berlin', country:'Germany'}, 
-			{city:'Tokyo', country:'Japan'}, 
-			{city:'Paris', country:'France'}, 
-			{city:'Beijing', country:'China'}, 
-			{city:'Canberra', country:'Australia'}
-		];
-		
-		factory.getCapitals = function() {
-			return capitals;
-		};
-		
-		factory.addCapital = function(newCity, newCountry) {
-			capitals.push({
-				city: newCity,
-				country: newCountry
-			});
 		};
 		
 		return factory;

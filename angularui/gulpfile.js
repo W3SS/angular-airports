@@ -12,7 +12,7 @@ var vendorDir = 'src/main/resources/static/vendor/';
 // Set the banner content
 var banner = ['/*!\n',
     ' * <%= pkg.title %> v<%= pkg.version %> (<%= pkg.homepage %>)\n',
-    ' * Copyright 2013-' + (new Date()).getFullYear(), ' <%= pkg.author %>\n',
+    ' * Copyright 2016-' + (new Date()).getFullYear(), ' <%= pkg.author %>\n',
     ' */\n',
     ''
 ].join('');
@@ -31,7 +31,7 @@ gulp.task('less', function() {
 // Minify compiled CSS
 gulp.task('minify-css', ['less'], function() {
     return gulp.src('css/grayscale.css')
-        .pipe(cleanCSS({ compatibility: 'ie8' }))
+        .pipe(cleanCSS())
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('css'))
         .pipe(browserSync.reload({
@@ -80,6 +80,10 @@ gulp.task('copy', function() {
               'bower_components/angular-route/angular-route.min.js', 
               'bower_components/angular-route/angular-csp.css'])
         .pipe(gulp.dest(vendorDir + 'angular-route'))
+
+    gulp.src(['node_modules/less/dist/less.js', 
+              'node_modules/less/dist/less.min.js'])
+        .pipe(gulp.dest(vendorDir + 'less'))
 })
 
 // Run everything

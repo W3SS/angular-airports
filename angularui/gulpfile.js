@@ -80,6 +80,10 @@ gulp.task('copy', function() {
               'bower_components/angular-route/angular-route.min.js', 
               'bower_components/angular-route/angular-csp.css'])
         .pipe(gulp.dest(vendorDir + 'angular-route'))
+		
+	gulp.src(['bower_components/angular-spinners/dist/angular-spinners.js', 
+              'bower_components/angular-spinners/dist/angular-spinners.min.js'])
+        .pipe(gulp.dest(vendorDir + 'angular-spinners'))
 
     gulp.src(['node_modules/less/dist/less.js', 
               'node_modules/less/dist/less.min.js'])

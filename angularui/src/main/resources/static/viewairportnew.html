@@ -1,0 +1,182 @@
+<!-- Navigation -->
+<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+				Menu <i class="fa fa-bars"></i>
+			</button>
+			<a class="navbar-brand page-scroll" href="#page-top">
+				<i class="fa fa-play-circle"></i> <span class="light">Angular Airports</span>
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+			<ul class="nav navbar-nav">
+				<!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+				<li class="hidden">
+					<a href="#page-top"></a>
+				</li>
+				<li>
+					<a class="page-scroll" href="#Details">Details</a>
+				</li>
+				<li>
+					<a class="page-scroll" href="#weather">Weather</a>
+				</li>
+				<li>
+					<a class="page-scroll" href="#charts">Charts</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<!-- Intro Header -->
+<header class="intro">
+	<div class="intro-body">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+					<h1 class="brand-heading">Grayscale</h1>
+					<p class="intro-text">A free, responsive, one page Bootstrap theme.
+						<br>Created by Start Bootstrap.</p>
+					<a href="#about" class="btn btn-circle page-scroll">
+						<i class="fa fa-angle-double-down animated"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+
+<!-- Weather Section -->
+<section id="weather" class="container content-section text-center">
+	<div class="row">
+		<div class="col-lg-8 col-lg-offset-2">
+		
+			<br /><br />
+
+			<h3>Current METAR: </h3>
+
+			<br /><br />
+			
+			<h4>{{ report["Raw-Report"] }}</h4>
+			
+			<br /><br />
+	
+			<h3>TAF Taken At: {{ forecast.Time }}</h3>
+
+			<br /><br />
+			
+			<h4>{{ forecast["Raw-Report"] }}</h4>
+			
+			<br /><br />
+		
+			<ul class="nav nav-tabs">
+				<li class="active"><a data-toggle="tab" href="#report">Current Conditions</a></li>
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+						Forecast Conditions
+						<i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+					</a>
+					<ul class="dropdown-menu">
+						<li ng-repeat="Forecast in forecast.Forecast | orderBy: 'Forecast.Start-Time' ">
+							<a data-toggle="tab" href="#{{ Forecast['Start-Time']}}">{{ forecast["Start-Time"]}} to {{ forecast["End-Time"]}}</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+
+			<!-- Tab panes -->
+			<div class="tab-content">
+				<div class="tab-pane fade in active" id="report">
+				
+					<table class="table-responsive">
+						<tr>
+							<td>Time:</td>
+							<td>{{ report.Time }}</td>
+						</tr>
+						<tr>
+							<td>Flight Rules:</td>
+							<td>{{ report["Flight-Rules"] }}</td>
+						</tr>
+						<tr>
+							<td>Wind:</td>
+							<td>{{ report.Translations.Wind }}</td>
+						</tr>
+						<tr>
+							<td>Clouds:</td>
+							<td>{{ report.Translations.Clouds }}</td>
+						</tr>
+						<tr>
+							<td>Temperature:</td>
+							<td>{{ report.Translations.Temperature }}</td>
+						</tr>
+						<tr>
+							<td>Dewpoint:</td>
+							<td>{{ report.Translations.Dewpoint }}</td>
+						</tr>
+						<tr>
+							<td>Visibility:</td>
+							<td>{{ report.Translations.Visibility }}</td>
+						</tr>
+						<tr>
+							<td>Other:</td>
+							<td>{{ report.Translations.Other }}</td>
+						</tr>
+					</table>
+				
+				</div>
+				<div ng-repeat="Forecast in forecast.Translations.Forecast" class="tab-pane fade in" id="{{ Forecast['Start-Time']}}">
+
+					<table class="table-responsive">
+						<tr>
+							<td>Clouds:</td>
+							<td>{{ Forecast.Clouds }}</td>
+						</tr>
+						<tr>
+							<td>Visibility:</td>
+							<td>{{ Forecast.Visibility }}</td>
+						</tr>
+						<tr>
+							<td>Wind:</td>
+							<td>{{ Forecast.Wind }}</td>
+						</tr>
+						<tr>
+							<td>Other:</td>
+							<td>{{ Forecast.Other }}</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+<!-- Charts Section -->
+<section id="charts" class="container content-section text-center">
+	<div class="row">
+		<div class="col-lg-8 col-lg-offset-2">
+			<h2>Contact Start Bootstrap</h2>
+			<p>Feel free to email us to provide some feedback on our templates, give us suggestions for new templates and themes, or to just say hello!</p>
+			<p><a href="mailto:feedback@startbootstrap.com">feedback@startbootstrap.com</a>
+			</p>
+			<ul class="list-inline banner-social-buttons">
+				<li>
+					<a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+				</li>
+				<li>
+					<a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+				</li>
+				<li>
+					<a href="https://plus.google.com/+Startbootstrap/posts" class="btn btn-default btn-lg"><i class="fa fa-google-plus fa-fw"></i> <span class="network-name">Google+</span></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</section>
+
+<!-- Map Section -->
+<div id="map"></div>

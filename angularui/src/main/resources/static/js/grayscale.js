@@ -14,7 +14,7 @@ function collapseNavbar() {
 }
 
 $(window).scroll(collapseNavbar);
-$(document).ready(collapseNavbar);
+//$(document).ready(collapseNavbar);
 
 // jQuery for page scrolling feature - requires jQuery Easing plugin
 $(function() {
@@ -32,6 +32,7 @@ $('.navbar-collapse ul li a').click(function() {
     $(".navbar-collapse").collapse('hide');
 });
 
+/*
 // Google Maps Scripts
 var map = null;
 // When the window has finished loading create our google map below
@@ -183,3 +184,4 @@ function init() {
         icon: image
     });
 }
+*/

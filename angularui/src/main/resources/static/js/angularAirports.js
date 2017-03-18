@@ -174,6 +174,30 @@ app
 			
 			return defer.promise;
 		};
+
+		/* Translates the forecast start/end times from DDHH to "DD/MM at HHMM UTC" (or MM/DD if a US Date) */
+		function translateStartEndTime(forecast) {
+			var now = Date.now;
+
+			var isUSDate = false;
+
+			var translatedStartDate = isUSDate ? 
+				now.getUTCMonth() + "/" + forecast["Start-Time"].substring(0, 1) : 
+				forecast["Start-Time"].substring(0, 1) + "/" + now.getUTCMonth();
+
+			var translatedEndDate = isUSDate ? 
+				now.getUTCMonth() + "/" + forecast["End-Time"].substring(0, 1) : 
+				forecast["End-Time"].substring(0, 1) + "/" + now.getUTCMonth();
+
+			var translatedStartTime = forecast["Start-Time"].substring(2, 3) + "00 UTC";
+
+			var translatedEndTime = forecast["End-Time"].substring(2, 3) + "00 UTC";
+
+			forecast["Start-Time"] = translatedStartDate + " at " + translatedStartTime;
+			forecast["End-Time"] = translatedEndDate + " at " + translatedEndTime;
+
+			return forecast;
+		}
 		
 		return factory;
 	});

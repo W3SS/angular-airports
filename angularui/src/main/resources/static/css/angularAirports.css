@@ -1,0 +1,26 @@
+.forecast-item > span {
+	font-size: 1.7em;
+	text-align: center;
+}
+
+.forecast-item > span > i {
+	padding-bottom: 10px;
+}
+
+.forecast-item > p {
+	font-variant: small-caps;
+	font-size: 1.4em;
+	text-align: left;
+}
+
+.forecast-item {
+	padding: 3%;
+	margin: 1%;
+	
+	background-color: rgba(57, 66, 56, 0.71);
+	
+	border: 5px solid;
+	border-color: rgba(24, 31, 24, 0.61);
+	
+	height: 60%;
+}

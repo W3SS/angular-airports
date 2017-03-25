@@ -109,7 +109,10 @@ app
 				})
 				.error(function(error) {
 					defer.reject(error);
-					$log.error("Error! " + error.message);
+					if (error)
+						$log.error("Error! " + error.message);
+					else
+						$log.error("Error! Unable to contact airport service. Ensure that it is currently running");
 				});
 			
 			return defer.promise;
@@ -125,7 +128,10 @@ app
 				})
 				.error(function(error) {
 					defer.reject(error);
-					$log.error("Error! " + error.message);
+					if (error)
+						$log.error("Error! " + error.message);
+					else
+						$log.error("Error! Unable to contact airport service. Ensure that it is currently running");
 				});
 
 			return defer.promise;
@@ -153,7 +159,10 @@ app
 				})
 				.error(function(error) {
 					defer.reject(error);
-					$log.error("Error! " + error.message);
+					if (error)
+						$log.error("Error! " + error.message);
+					else
+						$log.error("Error! Unable to contact airport service. Ensure that it is currently running");
 				});
 			
 			return defer.promise;
@@ -169,7 +178,10 @@ app
 				})
 				.error(function(error) {
 					defer.reject(error);
-					$log.error("Error! " + error.message);
+					if (error)
+						$log.error("Error! " + error.message);
+					else
+						$log.error("Error! Unable to contact airport service. Ensure that it is currently running");
 				});
 			
 			return defer.promise;
@@ -195,6 +207,17 @@ app
 
 			forecast["Start-Time"] = translatedStartDate + " at " + translatedStartTime;
 			forecast["End-Time"] = translatedEndDate + " at " + translatedEndTime;
+
+			return forecast;
+		}
+
+		/* Adds line breaks before each forecast time, as expected on a normal TAF */
+		function beautifyRawTaf(forecast) {
+			var raw = forecast["Raw-Report"];
+
+			forecast["Raw-Report"] = raw.replace(/FM/,    "<br />FM")
+										.replace(/BECMG/, "<br />BECMG")
+										.replace(/TEMPO/, "<br />TEMPO");
 
 			return forecast;
 		}

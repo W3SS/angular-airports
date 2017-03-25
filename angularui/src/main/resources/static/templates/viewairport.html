@@ -5,7 +5,7 @@
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
 				Menu <i class="fa fa-bars"></i>
 			</button>
-			<a class="navbar-brand page-scroll" data-target="#page-top">
+			<a class="navbar-brand page-scroll" href="/">
 				<i class="fa fa-plane"></i> <span class="light">Angular Airports</span>
 			</a>
 		</div>
@@ -37,7 +37,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2">
-					<h1 class="brand-heading">Grayscale</h1>
+					<h4 class="brand-heading">{{ airport.airportName }}</h4>
 					<p class="intro-text">A free, responsive, one page Bootstrap theme.
 						<br>Created by Start Bootstrap.</p>
 					<a data-target="#details" class="btn btn-circle page-scroll">
@@ -49,10 +49,17 @@
 	</div>
 </header>
 
+<!-- Details Section -->
+<section id="details" class="container content-section text-center">
+	<div class="col-md">
+		<p>Airport details go here</p>
+	</div>
+</section>
+
 <!-- Weather Section -->
 <section id="weather" class="container content-section text-center">
 	<div class="row">
-		<div class="col-lg-9 col-lg-offset-1">
+		<div class="col-lg-8 col-lg-offset-2">
 		
 			<br /><br />
 
@@ -89,18 +96,17 @@
 
 			<!-- Tab panes -->
 			<div class="tab-content">
-			
 				<div class="container tab-pane fade in active" id="report">
 					<!-- Add Flight Rules here as well -->
 					<div class="row justify-content-center">
-						<div class="col-md forecast-item rounded">
+						<div class="col-sm-4 weather-item rounded">
 							<span>
 								<i class="fa fa-clock-o"></i> <h4>Time</h4>
 							</span>
 							<p>{{ report.Time }}</p>
 						</div>
 						
-						<div class="col-md forecast-item rounded">
+						<div class="col-sm-4 weather-item rounded">
 							<span>
 								<i class="fa fa-clock-o"></i> <h4>Flight Rules</h4>
 							</span>
@@ -109,25 +115,28 @@
 					</div>
 					
 					<div class="row justify-content-center">
-						<div class="col-sm-2 forecast-item rounded">
+						<div class="col-sm-8 weather-item rounded">
 							<span>
 								<i class="fa fa-cloud"></i> <h4>Clouds</h4>
 							</span>
 							<p>{{ report.Translations.Clouds }}</p>
 						</div>
-						<div class="col-sm-2 forecast-item rounded">
+					</div>
+
+					<div class="row justify-content-center">
+						<div class="col-sm-2 weather-item rounded">
 							<span>
 								<i class="fa fa-binoculars"></i> <h4>Visibility</h4>
 							</span>
 							<p>{{ report.Translations.Visibility }}</p>
 						</div>
-						<div class="col-sm-2 forecast-item rounded">
+						<div class="col-sm-4 weather-item rounded">
 							<span>
 								<i class="fa fa-flag-o"></i> <h4>Wind</h4>
 							</span>
 							<p>{{ report.Translations.Wind }}</p>
 						</div>
-						<div class="col-sm-2 forecast-item rounded">
+						<div class="col-sm-2 weather-item rounded">
 							<span>
 								<i class="fa fa-exclamation"></i> <h4>Other</h4>
 							</span>
@@ -136,19 +145,19 @@
 					</div>
 					
 					<div class="row justify-content-center">
-						<div class="col-sm-2 forecast-item rounded">
+						<div class="col-sm-3 weather-item rounded">
 							<span>
 								<i class="fa fa-thermometer-three-quarters"></i> <h4>Temperature</h4>
 							</span>
 							<p>{{ report.Translations.Temperature }}</p>
 						</div>
-						<div class="col-sm-2 forecast-item rounded">
+						<div class="col-sm-3 weather-item rounded">
 							<span>
 								<i class="fa fa-thermometer-full"></i> <h4>Dewpoint</h4>
 							</span>
 							<p>{{ report.Translations.Dewpoint }}</p>
 						</div>
-						<div class="col-sm-2 forecast-item rounded">
+						<div class="col-sm-2 weather-item rounded">
 							<span>
 								<i class="fa fa-thermometer-full"></i> <h4>Altimeter</h4>
 							</span>
@@ -159,25 +168,37 @@
 				
 				<div ng-repeat="Forecast in forecast.Translations.Forecast" class="container tab-pane fade in" id="forecast{{ $index }}">
 					<div class="row justify-content-center">
-						<div class="col-sm-2 forecast-item rounded">
+						<div class="col-sm-8 weather-item rounded">
+							<span>
+								<i class="fa fa-clock-o"></i> <h4>Time</h4>
+							</span>
+							<p>From {{ Forecast["Start-Time"]}} to {{ Forecast["End-Time"]}}</p>
+						</div>
+					</div>
+
+					<div class="row justify-content-center">
+						<div class="col-sm-8 weather-item rounded">
 							<span>
 								<i class="fa fa-cloud"></i> <h4>Clouds</h4>
 							</span>
 							<p>{{ Forecast.Clouds }}</p>
 						</div>
-						<div class="col-sm-2 forecast-item rounded">
+					</div>
+
+					<div class="row justify-content-center">
+						<div class="col-sm-3 weather-item rounded">
 							<span>
 								<i class="fa fa-binoculars"></i> <h4>Visibility</h4>
 							</span>
 							<p>{{ Forecast.Visibility }}</p>
 						</div>
-						<div class="col-sm-2 forecast-item rounded">
+						<div class="col-sm-3 weather-item rounded">
 							<span>
 								<i class="fa fa-flag-o"></i> <h4>Wind</h4>
 							</span>
 							<p>{{ Forecast.Wind }}</p>
 						</div>
-						<div class="col-sm-2 forecast-item rounded">
+						<div class="col-sm-2 weather-item rounded">
 							<span>
 								<i class="fa fa-exclamation"></i> <h4>Other</h4>
 							</span>
@@ -185,7 +206,6 @@
 						</div>
 					</div>
 				</div>
-				
 			</div>
 
 		</div>
@@ -195,12 +215,25 @@
 <!-- Charts Section -->
 <section id="charts" class="container content-section text-center">
 	<div class="row">
-		<div class="col-lg-8 col-lg-offset-2">
-			<h2>Contact Start Bootstrap</h2>
-			<p>Feel free to email us to provide some feedback on our templates, give us suggestions for new templates and themes, or to just say hello!</p>
-			<p><a href="mailto:feedback@startbootstrap.com">feedback@startbootstrap.com</a>
-			</p>
+		<div class="col-lg-8 col-lg-offset-2" ng-if="!charts">
+			<h2>Instrument Approach Procedures</h2>
+
+			<div class="alert alert-warning">
+				<p>No charts and instrument approaches found for {{ airport.icaoCode }}!</p>
+			</div>
+		</div>
+
+		<div class="col-lg-8 col-lg-offset-2" ng-if="charts">
+			<h2>Instrument Approach Procedures</h2>
+
+			<p>{{ charts.size() }} charts and instrument approaches are available for {{ airport.icaoCode }}</p>
+			
+			<div class="alert alert-warning">
+				<p>Warning - Not for real life navigation!</p>
+			</div>
+
 			<ul class="list-inline banner-social-buttons">
+				<!-- ng-repeat="chart in charts" -->
 				<li>
 					<a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
 				</li>

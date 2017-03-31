@@ -7,7 +7,8 @@ var rename = require("gulp-rename");
 var uglify = require('gulp-uglify');
 var pkg = require('./package.json');
 
-var vendorDir = 'src/main/resources/static/vendor/';
+var staticDir = 'src/main/resources/static/';
+var vendorDir = staticDir + 'vendor/';
 
 // Set the banner content
 var banner = ['/*!\n',
@@ -19,10 +20,10 @@ var banner = ['/*!\n',
 
 // Compile LESS files from /less into /css
 gulp.task('less', function() {
-    return gulp.src('less/*.less')
+    return gulp.src(staticDir + 'less/*.less')
         .pipe(less())
         .pipe(header(banner, { pkg: pkg }))
-        .pipe(gulp.dest('css'))
+        .pipe(gulp.dest(staticDir + 'css'))
         .pipe(browserSync.reload({
             stream: true
         }))
@@ -30,10 +31,10 @@ gulp.task('less', function() {
 
 // Minify compiled CSS
 gulp.task('minify-css', ['less'], function() {
-    return gulp.src('css/grayscale.css')
+    return gulp.src(staticDir +'css/grayscale.css')
         .pipe(cleanCSS())
         .pipe(rename({ suffix: '.min' }))
-        .pipe(gulp.dest('css'))
+        .pipe(gulp.dest(staticDir + 'css'))
         .pipe(browserSync.reload({
             stream: true
         }))
@@ -41,11 +42,11 @@ gulp.task('minify-css', ['less'], function() {
 
 // Minify JS
 gulp.task('minify-js', function() {
-    return gulp.src('js/grayscale.js')
+    return gulp.src(staticDir + 'js/grayscale.js')
         .pipe(uglify())
         .pipe(header(banner, { pkg: pkg }))
         .pipe(rename({ suffix: '.min' }))
-        .pipe(gulp.dest('js'))
+        .pipe(gulp.dest(staticDir + 'js'))
         .pipe(browserSync.reload({
             stream: true
         }))

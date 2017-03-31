@@ -10,17 +10,28 @@
 .weather-item > p {
 	font-variant: small-caps;
 	font-size: 1.4em;
+	font-weight: lighter;
 	text-align: left;
 }
 
 .weather-item {
-	padding: 3%;
-	margin: 1%;
+	padding: 2%;
+	margin-top: 0.5%;
 	
-	background-color: rgba(57, 66, 56, 0.71);
+	background-color: rgba(44, 45, 44, 0.79);
 	
 	border: 5px solid;
-	border-color: rgba(24, 31, 24, 0.61);
+	border-color: rgba(26, 31, 26, 0.84);
 	
 	height: 14em;
+}
+
+.nav-tabs, dropdown {
+	font-family: sans-serif;
+	font-variant: small-caps;
+	font-size: large;
+	
+	border-color: rgba(56, 55, 55, 0.64);
+	
+	width: 104%;
 }

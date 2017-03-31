@@ -5,7 +5,7 @@
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
 				Menu <i class="fa fa-bars"></i>
 			</button>
-			<a class="navbar-brand page-scroll" href="/">
+			<a class="navbar-brand page-scroll" href="/search">
 				<i class="fa fa-plane"></i> <span class="light">Angular Airports</span>
 			</a>
 		</div>
@@ -37,9 +37,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2">
-					<h4 class="brand-heading">{{ airport.airportName }}</h4>
-					<p class="intro-text">A free, responsive, one page Bootstrap theme.
-						<br>Created by Start Bootstrap.</p>
+					<h4 class="brand-heading">{{ selectedAirport.airportName }}</h4>
+					<p class="intro-text">Located in {{ selectedAirport.city }}, {{ selectedAirport.country }}</p>
 					<a data-target="#details" class="btn btn-circle page-scroll">
 						<i class="fa fa-angle-double-down animated"></i>
 					</a>
@@ -60,25 +59,21 @@
 <section id="weather" class="container content-section text-center">
 	<div class="row">
 		<div class="col-lg-8 col-lg-offset-2">
-		
-			<br /><br />
 
-			<h3>Current METAR: </h3>
+			<div class="row justify-content-center">
+				<div class="col-lg weather-item rounded">
+					<h4>Current METAR</h4>
+					<p>{{ report["Raw-Report"] }}</p>
+				</div>
 
-			<br /><br />
+				<div class="col-lg weather-item rounded">
+					<h4>TAF Taken At {{ forecast.Time }}</h4>
+					<p>{{ forecast["Raw-Report"] }}</p>
+				</div>
+			</div>
 			
-			<h4>{{ report["Raw-Report"] }}</h4>
+			<br/>
 			
-			<br /><br />
-	
-			<h3>TAF Taken At: {{ forecast.Time }}</h3>
-
-			<br /><br />
-			
-			<h4>{{ forecast["Raw-Report"] }}</h4>
-			
-			<br /><br />
-		
 			<ul class="nav nav-tabs">
 				<li class="active"><a data-toggle="tab" data-target="#report">Current Conditions</a></li>
 				<li class="dropdown">
@@ -99,14 +94,14 @@
 				<div class="container tab-pane fade in active" id="report">
 					<!-- Add Flight Rules here as well -->
 					<div class="row justify-content-center">
-						<div class="col-sm-4 weather-item rounded">
+						<div class="col-lg-4 weather-item rounded">
 							<span>
 								<i class="fa fa-clock-o"></i> <h4>Time</h4>
 							</span>
 							<p>{{ report.Time }}</p>
 						</div>
 						
-						<div class="col-sm-4 weather-item rounded">
+						<div class="col-lg-4 weather-item rounded">
 							<span>
 								<i class="fa fa-clock-o"></i> <h4>Flight Rules</h4>
 							</span>
@@ -115,7 +110,7 @@
 					</div>
 					
 					<div class="row justify-content-center">
-						<div class="col-sm-8 weather-item rounded">
+						<div class="col-lg-8 weather-item rounded">
 							<span>
 								<i class="fa fa-cloud"></i> <h4>Clouds</h4>
 							</span>
@@ -124,19 +119,19 @@
 					</div>
 
 					<div class="row justify-content-center">
-						<div class="col-sm-2 weather-item rounded">
+						<div class="col-lg-2 weather-item rounded">
 							<span>
 								<i class="fa fa-binoculars"></i> <h4>Visibility</h4>
 							</span>
 							<p>{{ report.Translations.Visibility }}</p>
 						</div>
-						<div class="col-sm-4 weather-item rounded">
+						<div class="col-lg-3 weather-item rounded">
 							<span>
 								<i class="fa fa-flag-o"></i> <h4>Wind</h4>
 							</span>
 							<p>{{ report.Translations.Wind }}</p>
 						</div>
-						<div class="col-sm-2 weather-item rounded">
+						<div class="col-lg-3 weather-item rounded">
 							<span>
 								<i class="fa fa-exclamation"></i> <h4>Other</h4>
 							</span>
@@ -145,19 +140,19 @@
 					</div>
 					
 					<div class="row justify-content-center">
-						<div class="col-sm-3 weather-item rounded">
+						<div class="col-lg-3 weather-item rounded">
 							<span>
 								<i class="fa fa-thermometer-three-quarters"></i> <h4>Temperature</h4>
 							</span>
 							<p>{{ report.Translations.Temperature }}</p>
 						</div>
-						<div class="col-sm-3 weather-item rounded">
+						<div class="col-lg-3 weather-item rounded">
 							<span>
 								<i class="fa fa-thermometer-full"></i> <h4>Dewpoint</h4>
 							</span>
 							<p>{{ report.Translations.Dewpoint }}</p>
 						</div>
-						<div class="col-sm-2 weather-item rounded">
+						<div class="col-lg-2 weather-item rounded">
 							<span>
 								<i class="fa fa-thermometer-full"></i> <h4>Altimeter</h4>
 							</span>
@@ -168,7 +163,7 @@
 				
 				<div ng-repeat="Forecast in forecast.Translations.Forecast" class="container tab-pane fade in" id="forecast{{ $index }}">
 					<div class="row justify-content-center">
-						<div class="col-sm-8 weather-item rounded">
+						<div class="col-lg-8 weather-item rounded">
 							<span>
 								<i class="fa fa-clock-o"></i> <h4>Time</h4>
 							</span>
@@ -177,7 +172,7 @@
 					</div>
 
 					<div class="row justify-content-center">
-						<div class="col-sm-8 weather-item rounded">
+						<div class="col-lg-8 weather-item rounded">
 							<span>
 								<i class="fa fa-cloud"></i> <h4>Clouds</h4>
 							</span>
@@ -186,19 +181,19 @@
 					</div>
 
 					<div class="row justify-content-center">
-						<div class="col-sm-3 weather-item rounded">
+						<div class="col-lg-2 weather-item rounded">
 							<span>
 								<i class="fa fa-binoculars"></i> <h4>Visibility</h4>
 							</span>
 							<p>{{ Forecast.Visibility }}</p>
 						</div>
-						<div class="col-sm-3 weather-item rounded">
+						<div class="col-lg-3 weather-item rounded">
 							<span>
 								<i class="fa fa-flag-o"></i> <h4>Wind</h4>
 							</span>
 							<p>{{ Forecast.Wind }}</p>
 						</div>
-						<div class="col-sm-2 weather-item rounded">
+						<div class="col-lg-3 weather-item rounded">
 							<span>
 								<i class="fa fa-exclamation"></i> <h4>Other</h4>
 							</span>
@@ -219,14 +214,14 @@
 			<h2>Instrument Approach Procedures</h2>
 
 			<div class="alert alert-warning">
-				<p>No charts and instrument approaches found for {{ airport.icaoCode }}!</p>
+				<p>No charts and instrument approaches found for {{ selectedAirport.icaoCode }}!</p>
 			</div>
 		</div>
 
 		<div class="col-lg-8 col-lg-offset-2" ng-if="charts">
 			<h2>Instrument Approach Procedures</h2>
 
-			<p>{{ charts.size() }} charts and instrument approaches are available for {{ airport.icaoCode }}</p>
+			<p>{{ charts.size() }} charts and instrument approaches are available for {{ selectedAirport.icaoCode }}</p>
 			
 			<div class="alert alert-warning">
 				<p>Warning - Not for real life navigation!</p>

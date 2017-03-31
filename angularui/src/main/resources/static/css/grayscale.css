@@ -1,7 +1,6 @@
 /*!
- * Start Bootstrap - Grayscale v3.3.7+1 (http://startbootstrap.com/template-overviews/grayscale)
- * Copyright 2013-2016 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ * AngularAirports v3.3.7+1 (http://chrisali.com)
+ * Copyright 2016-2017 Chris Ali
  */
 body {
   width: 100%;
@@ -124,7 +123,7 @@ a:focus {
   padding: 100px 0;
   text-align: center;
   color: white;
-  background: url(../img/intro-bg.jpg) no-repeat bottom center scroll;
+  background: url(../img/landing2-bg.jpg) no-repeat bottom center scroll;
   background-color: black;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -147,7 +146,7 @@ a:focus {
     padding: 0;
   }
   .intro .intro-body .brand-heading {
-    font-size: 100px;
+    font-size: 75px;
   }
   .intro .intro-body .intro-text {
     font-size: 26px;

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 
 @ControllerAdvice
-public class AirportinfoExceptionHandlers {
+public class AirportExceptionHandlers {
 	
 	private Logger logger = LoggerFactory.getLogger(ExceptionHandler.class);
 	

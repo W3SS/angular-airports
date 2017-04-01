@@ -105,7 +105,7 @@ app.factory('airportFactory', function($http, $q, $log, $rootScope) {
 	
 	var urlRootSearch = $rootScope.airportServiceEndpoint + "airports/search/";
 	var urlRootSingle = $rootScope.airportServiceEndpoint + "airports/get/";
-	var urlRootCharts = $rootScope.airportServiceEndpoint + "airports/charts/";
+	var urlRootCharts = $rootScope.airportServiceEndpoint + "airports/charts/icao/";
 
 	factory.getAirportsByQuery = function(query) {
 		var defer = $q.defer(); 

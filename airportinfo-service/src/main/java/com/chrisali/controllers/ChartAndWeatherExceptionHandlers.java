@@ -11,15 +11,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 
 @ControllerAdvice
-public class WeatherServiceExceptionHandlers {
+public class ChartAndWeatherExceptionHandlers {
 	
 	private Logger logger = LoggerFactory.getLogger(ExceptionHandler.class);
 
 	@ExceptionHandler(StationNotFoundException.class)
 	public ResponseEntity<ErrorInfo> handleException(StationNotFoundException ex) {
+		ErrorInfo info = new ErrorInfo();
+		info.setMessage(ex.getMessage());
+		info.setStatusCode(HttpStatus.BAD_REQUEST.toString());
+		info.setHtml("");
+		
+		logger.error(ex.getMessage());
+		
+		return new ResponseEntity<ErrorInfo>(info, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(ChartsNotFoundException.class)
+	public ResponseEntity<ErrorInfo> handleException(ChartsNotFoundException ex) {
 		ErrorInfo info = new ErrorInfo();
 		info.setMessage(ex.getMessage());
 		info.setStatusCode(HttpStatus.BAD_REQUEST.toString());
@@ -75,7 +88,19 @@ public class WeatherServiceExceptionHandlers {
 		
 		logger.error("Internal error processing request: " + ex.getMessage());
 		
-		return new ResponseEntity<ErrorInfo>(info, HttpStatus.REQUEST_TIMEOUT);
+		return new ResponseEntity<ErrorInfo>(info, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	@ExceptionHandler(HttpClientErrorException.class)
+	public ResponseEntity<ErrorInfo> handleException(HttpClientErrorException ex) {
+		ErrorInfo info = new ErrorInfo();
+		info.setMessage("Requested URL not found on server");
+		info.setStatusCode(HttpStatus.NOT_FOUND.toString());
+		info.setHtml("");
+		
+		logger.error("Requested URL not found on server: " + ex.getMessage());
+		
+		return new ResponseEntity<ErrorInfo>(info, HttpStatus.NOT_FOUND);
 	}
 	
 	@ExceptionHandler(HttpMessageNotReadableException.class)

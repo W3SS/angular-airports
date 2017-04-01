@@ -20,7 +20,7 @@ public class WeatherController {
 	private static final String[] URL_TYPES = new String[] { "metar/", "taf/" };
 	private static final String URL_SUFFIX = "?options=translate,info";
 	
-	@RequestMapping(value = "report/icao/{icaoCode}", produces = MediaType.APPLICATION_JSON_VALUE,  method = RequestMethod.GET)
+	@RequestMapping(value = "report/icao/{icaoCode}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	public WeatherReport getReport(@PathVariable String icaoCode) throws StationNotFoundException {
 		String urlToHit = URL_PREFIX + URL_TYPES[0] + icaoCode + URL_SUFFIX;
@@ -33,7 +33,7 @@ public class WeatherController {
 		return report;
 	}
 	
-	@RequestMapping(value = "forecast/icao/{icaoCode}", produces = MediaType.APPLICATION_JSON_VALUE,  method = RequestMethod.GET)
+	@RequestMapping(value = "forecast/icao/{icaoCode}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	public WeatherForecast getForecast(@PathVariable String icaoCode) throws StationNotFoundException {
 		String urlToHit = URL_PREFIX + URL_TYPES[1] + icaoCode + URL_SUFFIX;

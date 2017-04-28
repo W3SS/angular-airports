@@ -66,6 +66,22 @@
 					<td><a href="#/view/{{ airport.id }}">{{ airport.city }}, {{ airport.country }}</a></td>
 				</tr>
 			</table>
+			
+			<div class="row container">
+				<div class="col-lg-4 col-md-4 col-sm-6 search-item" 
+					ng-repeat="airport in airportResults | orderBy:'airportName'"
+					ng-click=""> <!-- create goto method in search controller -->
+					<p>{{ airport.icaoCode }}</p>
+					<div class="row">
+						<div class="col inner-text-left">
+							<p>{{ airport.airportName }}</p>
+						</div>
+						<div class="col inner-text-right">
+							<p>{{ airport.city }}, {{ airport.country }}</p>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>

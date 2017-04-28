@@ -18,7 +18,7 @@ import org.springframework.http.MediaType;
 @RestController
 @RequestMapping("/airports/")
 @CrossOrigin(origins = "http://localhost:8080")
-public class AirportChartController {
+public class AirportChartsController {
     
     private static final String URL_PREFIX = "http://api.aircharts.org/Airport/";
     private static final String URL_SUFFIX = ".json";

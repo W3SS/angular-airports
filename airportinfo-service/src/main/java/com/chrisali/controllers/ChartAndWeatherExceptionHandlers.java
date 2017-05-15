@@ -2,6 +2,8 @@ package com.chrisali.controllers;
 
 import com.chrisali.model.*;
 import com.chrisali.exceptions.*;
+
+import java.io.IOException;
 import java.net.ConnectException;
 import java.net.UnknownHostException;
 import org.slf4j.Logger;
@@ -111,6 +113,18 @@ public class ChartAndWeatherExceptionHandlers {
 		info.setHtml("");
 		
 		logger.error("Unable to read HTTP request: " + ex.getMessage());
+		
+		return new ResponseEntity<ErrorInfo>(info, HttpStatus.UNPROCESSABLE_ENTITY);
+	}
+	
+	@ExceptionHandler(IOException.class)
+	public ResponseEntity<ErrorInfo> handleException(IOException ex) {
+		ErrorInfo info = new ErrorInfo();
+		info.setMessage("There was an error reading the host's message");
+		info.setStatusCode(HttpStatus.UNPROCESSABLE_ENTITY.toString());
+		info.setHtml("");
+		
+		logger.error("Unable to decode HTTP response: " + ex.getMessage());
 		
 		return new ResponseEntity<ErrorInfo>(info, HttpStatus.UNPROCESSABLE_ENTITY);
 	}

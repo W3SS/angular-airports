@@ -20,13 +20,12 @@ import org.springframework.http.MediaType;
 @CrossOrigin(origins = "http://localhost:8080")
 public class AirportChartsController {
     
-    private static final String URL_PREFIX = "http://api.aircharts.org/Airport/";
-    private static final String URL_SUFFIX = ".json";
+    private static final String URL_PREFIX = "https://api.aircharts.org/v2/Airport/";
 
     @RequestMapping(value = "charts/icao/{icaoCode}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     public AirportCharts getChartByIcao(@PathVariable String icaoCode) throws ChartsNotFoundException, IOException {
-        String urlToHit = URL_PREFIX + icaoCode + URL_SUFFIX;
+        String urlToHit = URL_PREFIX + icaoCode;
 
         RestTemplate restTemplate = new RestTemplate();
         AirportCharts charts = null;
@@ -41,7 +40,7 @@ public class AirportChartsController {
         } catch (IllegalArgumentException ex) {
             throw new ChartsNotFoundException(icaoCode);
         } catch (IOException ex) {
-            throw new IOException("Unable to read parsed data!" + ex.getMessage());
+            throw new IOException("Unable to read parsed data! \n" + ex.getMessage());
         } 
         
         return charts;

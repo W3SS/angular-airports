@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,8 +43,10 @@ public class AirportChartsControllerTests {
 		String icaoCode = "kttn";
 		mockMvc.perform(get("/airports/charts/icao/{icaoCode}", icaoCode))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.info.icao", is("KTTN")))
-				.andExpect(jsonPath("$.charts", not(isEmptyString())));
+				.andExpect(jsonPath("$", notNullValue()))
+				.andExpect(jsonPath("$.info.id", is("KTTN")))
+				.andExpect(jsonPath("$.charts", Matchers.hasKey("General")))
+				.andExpect(jsonPath("$.charts", Matchers.hasKey("Approach")));
 	}
 	
 	@Test
@@ -52,8 +55,9 @@ public class AirportChartsControllerTests {
 		
 		String icaoCode = "ktttttn";
 		mockMvc.perform(get("/airports/charts/icao/{icaoCode}", icaoCode))
-				.andExpect(status().isBadRequest())
+				.andExpect(status().isNotFound())
+				.andExpect(jsonPath("$", notNullValue()))
 				.andExpect(jsonPath("$.message", notNullValue()))
-				.andExpect(jsonPath("$.statusCode", is("400")));
+				.andExpect(jsonPath("$.statusCode", is("404")));
 	}
 }

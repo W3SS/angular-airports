@@ -42,6 +42,7 @@ public class WeatherControllerTests {
 		String icaoCode = "kttn";
 		mockMvc.perform(get("/weather/report/icao/{icaoCode}", icaoCode))
 				.andExpect(status().isOk())
+				.andExpect(jsonPath("$", notNullValue()))
 				.andExpect(jsonPath("$.Station", is("KTTN")));
 	}
 	
@@ -52,6 +53,7 @@ public class WeatherControllerTests {
 		String icaoCode = "ktttttn";
 		mockMvc.perform(get("/weather/report/icao/{icaoCode}", icaoCode))
 				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$", notNullValue()))
 				.andExpect(jsonPath("$.message", notNullValue()))
 				.andExpect(jsonPath("$.statusCode", is("400")));
 	}
@@ -63,6 +65,7 @@ public class WeatherControllerTests {
 		String icaoCode = "kttn";
 		mockMvc.perform(get("/weather/forecast/icao/{icaoCode}", icaoCode))
 				.andExpect(status().isOk())
+				.andExpect(jsonPath("$", notNullValue()))
 				.andExpect(jsonPath("$.Station", is("KTTN")));
 	}
 	
@@ -73,6 +76,7 @@ public class WeatherControllerTests {
 		String icaoCode = "ktttttn";
 		mockMvc.perform(get("/weather/forecast/icao/{icaoCode}", icaoCode))
 				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$", notNullValue()))
 				.andExpect(jsonPath("$.message", notNullValue()))
 				.andExpect(jsonPath("$.statusCode", is("400")));
 	}

@@ -9,12 +9,11 @@ import lombok.Data;
 
 @Data
 @JsonInclude(Include.NON_NULL)
-//@JsonRootName(value = "rootTagInJson") // how to get this dynamically
 public class AirportCharts {
     
     protected Map<String, Object> info;
 
-    private AirportChart[] charts;
+    protected Map<String, AirportChart[]> charts;
 
     @Data
     static class AirportChart {
@@ -22,8 +21,10 @@ public class AirportCharts {
 
         private String type;
 
-        private String name;
+        private String chartname;
 
         private String url;
+        
+        private String proxy;
     }
 }

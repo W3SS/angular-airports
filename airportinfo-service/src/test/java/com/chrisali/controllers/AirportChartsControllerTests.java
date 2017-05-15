@@ -1,5 +1,11 @@
 package com.chrisali.controllers;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,15 +16,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import com.chrisali.model.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -40,18 +37,18 @@ public class AirportChartsControllerTests {
 	
 	@Test
 	public void getChartsTest() throws Exception {
-		assertThat(weatherController).isNotNull();
+		assertThat(chartsController).isNotNull();
 		
 		String icaoCode = "kttn";
 		mockMvc.perform(get("/airports/charts/icao/{icaoCode}", icaoCode))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.info.icao", is("KTTN")));
-				.andExpect(jsonPath("$.charts", isNotEmpty()));
+				.andExpect(jsonPath("$.info.icao", is("KTTN")))
+				.andExpect(jsonPath("$.charts", not(isEmptyString())));
 	}
 	
 	@Test
 	public void getChartsTestNotFound() throws Exception {
-		assertThat(weatherController).isNotNull();
+		assertThat(chartsController).isNotNull();
 		
 		String icaoCode = "ktttttn";
 		mockMvc.perform(get("/airports/charts/icao/{icaoCode}", icaoCode))

@@ -5,7 +5,7 @@
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
 				Menu <i class="fa fa-bars"></i>
 			</button>
-			<a class="navbar-brand page-scroll" data-target="#page-top">
+			<a class="navbar-brand page-scroll" data-target="#page-top" ng-click="scrollTo('page-top');">
 				<i class="fa fa-plane"></i> <span class="light">Angular Airports</span>
 			</a>
 		</div>
@@ -39,7 +39,7 @@
 					
 					<input type="text" class="form-control input-lg" ng-model="query" placeholder="Enter an Airport Name, City, ICAO Code or an IATA Code" />
 					
-					<a data-target="#results" class="btn btn-circle page-scroll" ng-click="getAirportResults()">
+					<a data-target="#results" class="btn btn-circle page-scroll" ng-click="getAirportResults(); scrollTo('results');">
 						<i class="fa fa-search animated"></i>
 					</a>
 				</div>
@@ -68,7 +68,7 @@
 			</table>
 			
 			<div class="row container">
-				<div class="col-lg-4 col-md-4 col-sm-6 search-item" 
+				<div class="col-lg-5 col-md-5 col-sm-6 search-item" 
 					ng-repeat="airport in airportResults | orderBy:'airportName'"
 					ng-click=""> <!-- create goto method in search controller -->
 					<p>{{ airport.icaoCode }}</p>

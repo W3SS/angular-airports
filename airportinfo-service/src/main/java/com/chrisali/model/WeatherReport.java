@@ -41,16 +41,16 @@ public class WeatherReport {
 	private String dewpoint;
 	
 	@JsonProperty("Wind-Direction")
-	private Integer windDir;
+	private String windDir;
 	
 	@JsonProperty("Wind-Variable-Dir")
-	private List<Integer> windVariableDir;
+	private List<String> windVariableDir;
 	
 	@JsonProperty("Wind-Speed")
-	private Integer windSpeed;
+	private String windSpeed;
 	
 	@JsonProperty("Wind-Gust")
-	private Integer windGust;
+	private String windGust;
 	
 	@JsonProperty("Visibility")
 	private String visibility;

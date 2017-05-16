@@ -19,8 +19,6 @@ public class AirportCharts {
     static class AirportChart {
         private String id;
 
-        private String type;
-
         private String chartname;
 
         private String url;

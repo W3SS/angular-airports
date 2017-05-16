@@ -5,7 +5,7 @@
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
 				Menu <i class="fa fa-bars"></i>
 			</button>
-			<a class="navbar-brand page-scroll" href="/search">
+			<a class="navbar-brand page-scroll" ng-href="#/search">
 				<i class="fa fa-plane"></i> <span class="light">Angular Airports</span>
 			</a>
 		</div>
@@ -15,16 +15,16 @@
 			<ul class="nav navbar-nav">
 				<!-- Hidden li included to remove active class from about link when scrolled up past about section -->
 				<li class="hidden">
-					<a data-target="#page-top"></a>
+					<a data-target="#page-top" ng-click="scrollTo('page-top');"></a>
 				</li>
 				<li>
-					<a class="page-scroll" data-target="#details">Details</a>
+					<a class="page-scroll" data-target="#details" ng-click="scrollTo('details');">Details</a>
 				</li>
 				<li>
-					<a class="page-scroll" data-target="#weather">Weather</a>
+					<a class="page-scroll" data-target="#weather" ng-click="scrollTo('weather');">Weather</a>
 				</li>
 				<li>
-					<a class="page-scroll" data-target="#charts">Charts</a>
+					<a class="page-scroll" data-target="#charts" ng-click="scrollTo('charts');">Charts</a>
 				</li>
 			</ul>
 		</div>
@@ -39,7 +39,7 @@
 				<div class="col-md-8 col-md-offset-2">
 					<h4 class="brand-heading">{{ selectedAirport.airportName }}</h4>
 					<p class="intro-text">Located in {{ selectedAirport.city }}, {{ selectedAirport.country }}</p>
-					<a data-target="#details" class="btn btn-circle page-scroll">
+					<a data-target="#details" class="btn btn-circle page-scroll" ng-click="scrollTo('details');">
 						<i class="fa fa-angle-double-down animated"></i>
 					</a>
 				</div>
@@ -52,6 +52,9 @@
 <section id="details" class="container content-section text-center">
 	<div class="col-md">
 		<p>Airport details go here</p>
+		
+		<!-- Perhaps a map as well -->
+		<div id="map"></div>
 	</div>
 </section>
 
@@ -60,7 +63,7 @@
 	<div class="row">
 		<div class="col-lg-8 col-lg-offset-2">
 
-			<h4>Weather Conditions for {{ selectedAirport.airportName }}</h4>
+			<h3>Weather Conditions for {{ selectedAirport.airportName }}</h3>
 
 			<div class="row justify-content-center">
 				<div class="col-lg weather-item rounded">
@@ -76,6 +79,7 @@
 			
 			<br/>
 			
+			<!-- Tabs -->
 			<ul class="nav nav-tabs">
 				<li class="active"><a data-toggle="tab" data-target="#report">Current Conditions</a></li>
 				<li class="dropdown">
@@ -163,7 +167,7 @@
 					</div>
 				</div>
 				
-				<div ng-repeat="Forecast in forecast.Translations.Forecast" class="container tab-pane fade in" id="forecast{{ $index }}">
+				<div ng-repeat="Forecast in forecast.Translations.Forecast" class="container tab-pane fade" id="forecast{{ $index }}">
 					<div class="row justify-content-center">
 						<div class="col-lg-8 weather-item rounded">
 							<span>
@@ -216,34 +220,42 @@
 			<h2>Instrument Approach Procedures</h2>
 
 			<div class="alert alert-warning">
-				<p>No charts and instrument approaches found for {{ selectedAirport.icaoCode }}!</p>
+				<p>No charts found for {{ selectedAirport.icaoCode }}!</p>
 			</div>
 		</div>
 
 		<div class="col-lg-8 col-lg-offset-2" ng-if="charts">
-			<h2>Instrument Approach Procedures</h2>
+		
+			<p>{{ charts.General.length }} general and {{ charts.Approach.length }} instrument approach charts are available for {{ selectedAirport.icaoCode }}</p>
 
-			<p>{{ charts.size() }} charts and instrument approaches are available for {{ selectedAirport.icaoCode }}</p>
-			
 			<div class="alert alert-warning">
 				<p>Warning - Not for real life navigation!</p>
-			</div>
-
-			<ul class="list-inline banner-social-buttons">
-				<!-- ng-repeat="chart in charts" -->
-				<li>
-					<a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
-				</li>
-				<li>
-					<a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
-				</li>
-				<li>
-					<a href="https://plus.google.com/+Startbootstrap/posts" class="btn btn-default btn-lg"><i class="fa fa-google-plus fa-fw"></i> <span class="network-name">Google+</span></a>
-				</li>
+			</div>			
+			
+			<!-- Tabs -->
+			<ul class="nav nav-tabs">
+				<li class="active"><a data-toggle="tab" data-target="#general">General</a></li>
+				<li><a data-toggle="tab" data-target="#approach">Approach</a></li>
 			</ul>
+
+			<!-- Tab panes -->
+			<div class="tab-content">
+				<div class="container tab-pane fade in active" id="general">
+					<div class="row justify-content-center">
+						<div ng-repeat="chart in charts['General']" class="col-lg-5 col-md-4 col-sm-6 search-item">
+							<a class="btn btn-default btn-lg" href="{{ chart.proxy }}"><span class="network-name">{{ chart.chartname }}</span></a>
+						</div>
+					</div>
+				</div>
+
+				<div class="container tab-pane fade" id="approach">
+					<div class="row justify-content-center">
+						<div ng-repeat="chart in charts['Approach']" class="col-lg-5 col-md-4 col-sm-6 search-item">
+							<a class="btn btn-default btn-lg" href="{{ chart.proxy }}"><span class="network-name">{{ chart.chartname }}</span></a>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>
-
-<!-- Map Section -->
-<div id="map"></div>

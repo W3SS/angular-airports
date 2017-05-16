@@ -29,7 +29,7 @@ app.run(function($rootScope) {
 // ======================================
 //           Controllers
 // ======================================
-app.controller('airportSearchController', function($scope, airportFactory) {
+app.controller('airportSearchController', function($scope, $location, $anchorScroll, airportFactory) {
 	$scope.airportResults = [];
 	
 	$scope.init = function() {
@@ -44,10 +44,16 @@ app.controller('airportSearchController', function($scope, airportFactory) {
 			);
 	};
 	
+	// Set the location.hash to the id of the element to scroll to
+	$scope.scrollTo = function(id) {
+		$location.hash(id);
+		$anchorScroll();
+    };
+	
 	$scope.init();
 });
 
-app.controller('airportDetailsController', function($scope, $routeParams, airportFactory, weatherFactory) {
+app.controller('airportDetailsController', function($scope, $routeParams, $location, $anchorScroll, airportFactory, weatherFactory) {
 	
 	$scope.selectedAirport = {};
 	$scope.report = {};
@@ -74,6 +80,7 @@ app.controller('airportDetailsController', function($scope, $routeParams, airpor
 			.then(
 				function(result) { $scope.forecast = result; }
 			);
+		return icaoCode; // need to return this, otherwise next in promise chain has an undefined arg
 	};
 
 	getCharts = function (icaoCode) {
@@ -86,9 +93,15 @@ app.controller('airportDetailsController', function($scope, $routeParams, airpor
 	// Chain promises to get weather and charts only after getting single airport
 	$scope.init = function() {
 		$scope.getAirport()
-			.then(getWeather);
-			//.then(getCharts);
-	}
+			.then(getWeather)
+			.then(getCharts);
+	};
+	
+	// Set the location.hash to the id of the element to scroll to
+	$scope.scrollTo = function(id) {
+		$location.hash(id);
+		$anchorScroll();
+    };
 	
 	$scope.init();
 });
@@ -150,8 +163,8 @@ app.factory('airportFactory', function($http, $q, $log, $rootScope) {
 
 		$http.get(urlRootCharts + icaoCode)
 			.success(function(response) {
-				airportCharts = response;
-				defer.resolve(response);
+				airportCharts = response.charts;
+				defer.resolve(response.charts);
 			})
 			.error(function(error) {
 				defer.reject(error);

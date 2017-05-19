@@ -49,6 +49,12 @@ app.controller('airportSearchController', function($scope, $location, $anchorScr
 		$location.hash(id);
 		$anchorScroll();
     };
+    
+    // Navigates to a partial via an ng-click
+    $scope.navigateTo = function (path) {
+    	$location.hash('');
+    	$location.path(path);
+	};
 	
 	$scope.init();
 });
@@ -102,6 +108,12 @@ app.controller('airportDetailsController', function($scope, $routeParams, $locat
 		$location.hash(id);
 		$anchorScroll();
     };
+    
+    // Navigates to a partial via an ng-click
+    $scope.navigateTo = function (path) {
+    	$location.hash('');
+    	$location.path(path);
+	};
 	
 	$scope.init();
 });

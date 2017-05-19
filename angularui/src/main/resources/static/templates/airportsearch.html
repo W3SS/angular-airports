@@ -51,26 +51,20 @@
 <!-- Search Results -->
 <section id="results" class="container content-section text-center" ng-if="airportResults">
 	<div class="row">
-		<div class="col-lg-8 col-lg-offset-2" ng-if="airportResults.length === 0">
-			<h2>No Airports Found!</h2>
+		<div class="col" ng-if="airportResults.length === 0">
+			<div class="alert alert-warning">
+				<p>No airports found! Please refine your search and try again</p>
+			</div>	
 		</div>
-		<div class="col-lg-8 col-lg-offset-2" ng-if="airportResults.length > 0">
+		<div class="col" ng-if="airportResults.length > 0">
 			<h2>Search Results: Found {{ airportResults.length }} Airports</h2>
 			
 			<br /><br />
-			
-			<table class="table-responsive">
-				<tr ng-repeat="airport in airportResults | orderBy:'airportName'">
-					<td><i class="fa fa-circle-thin"></i></td>
-					<td><a href="#/view/{{ airport.id }}">{{ airport.airportName }}  ( {{ airport.icaoCode }} )</a></td>
-					<td><a href="#/view/{{ airport.id }}">{{ airport.city }}, {{ airport.country }}</a></td>
-				</tr>
-			</table>
-			
+
 			<div class="row container">
-				<div class="col-lg-5 col-md-5 col-sm-6 search-item" 
-					ng-repeat="airport in airportResults | orderBy:'airportName'"
-					ng-click=""> <!-- create goto method in search controller -->
+				<div class="col-lg-4 col-md-6 col-sm-6 search-item" 
+					ng-repeat="airport in airportResults | orderBy:'airportName' | limitTo:100"
+					ng-click="navigateTo('/view/'+airport.id);">
 					<p>{{ airport.icaoCode }}</p>
 					<div class="row">
 						<div class="col inner-text-left">

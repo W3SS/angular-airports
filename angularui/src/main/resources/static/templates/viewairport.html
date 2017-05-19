@@ -56,15 +56,21 @@
 		<!-- Perhaps a map as well -->
 		<div id="map"></div>
 	</div>
+	
+	<hr />
 </section>
 
 <!-- Weather Section -->
 <section id="weather" class="container content-section text-center">
+	<h2>Weather Conditions for {{ selectedAirport.airportName }}</h2>
+	
 	<div class="row">
-		<div class="col-lg-8 col-lg-offset-2">
-
-			<h3>Weather Conditions for {{ selectedAirport.airportName }}</h3>
-
+		<div class="col" ng-if="!report && !forecast">
+			<div class="alert alert-warning">
+				<p>No weather data available for {{ selectedAirport.icaoCode }}!</p>
+			</div>
+		</div>		
+		<div class="col" ng-if="report && forecast">
 			<div class="row justify-content-center">
 				<div class="col-lg weather-item rounded">
 					<h4>Current METAR</h4>
@@ -100,65 +106,55 @@
 				<div class="container tab-pane fade in active" id="report">
 					<!-- Add Flight Rules here as well -->
 					<div class="row justify-content-center">
-						<div class="col-lg-4 weather-item rounded">
+						<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 weather-item rounded">
 							<span>
 								<i class="fa fa-clock-o"></i> Time
 							</span>
 							<p>{{ report.Time }}</p>
 						</div>
-						
-						<div class="col-lg-4 weather-item rounded">
+						<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 weather-item rounded">
 							<span>
 								<i class="fa fa-clock-o"></i> Flight Rules
 							</span>
 							<p>{{ report["Flight-Rules"] }}</p>
 						</div>
-					</div>
-					
-					<div class="row justify-content-center">
-						<div class="col-lg-8 weather-item rounded">
+						<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 weather-item rounded">
 							<span>
 								<i class="fa fa-cloud"></i> Clouds
 							</span>
 							<p>{{ report.Translations.Clouds }}</p>
 						</div>
-					</div>
-
-					<div class="row justify-content-center">
-						<div class="col-lg-2 weather-item rounded">
+						<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 weather-item rounded">
 							<span>
 								<i class="fa fa-binoculars"></i> Visibility
 							</span>
 							<p>{{ report.Translations.Visibility }}</p>
 						</div>
-						<div class="col-lg-3 weather-item rounded">
+						<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 weather-item rounded">
 							<span>
 								<i class="fa fa-flag-o"></i> Wind
 							</span>
 							<p>{{ report.Translations.Wind }}</p>
 						</div>
-						<div class="col-lg-3 weather-item rounded">
+						<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 weather-item rounded">
 							<span>
 								<i class="fa fa-exclamation"></i> Other
 							</span>
 							<p>{{ report.Translations.Other }}</p>
 						</div>
-					</div>
-					
-					<div class="row justify-content-center">
-						<div class="col-lg-3 weather-item rounded">
+						<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 weather-item rounded">
 							<span>
 								<i class="fa fa-thermometer-three-quarters"></i> Temperature
 							</span>
 							<p>{{ report.Translations.Temperature }}</p>
 						</div>
-						<div class="col-lg-3 weather-item rounded">
+						<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 weather-item rounded">
 							<span>
 								<i class="fa fa-thermometer-full"></i> Dewpoint
 							</span>
 							<p>{{ report.Translations.Dewpoint }}</p>
 						</div>
-						<div class="col-lg-2 weather-item rounded">
+						<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 weather-item rounded">
 							<span>
 								<i class="fa fa-thermometer-full"></i> Altimeter
 							</span>
@@ -169,37 +165,31 @@
 				
 				<div ng-repeat="Forecast in forecast.Translations.Forecast" class="container tab-pane fade" id="forecast{{ $index }}">
 					<div class="row justify-content-center">
-						<div class="col-lg-8 weather-item rounded">
+						<div class="col-lg-4 col-md-4 col-sm-6 weather-item rounded">
 							<span>
 								<i class="fa fa-clock-o"></i> Time
 							</span>
 							<p>From {{ Forecast["Start-Time"]}} to {{ Forecast["End-Time"]}}</p>
 						</div>
-					</div>
-
-					<div class="row justify-content-center">
-						<div class="col-lg-8 weather-item rounded">
+						<div class="col-lg-4 col-md-6 col-sm-6 weather-item rounded">
 							<span>
 								<i class="fa fa-cloud"></i> Clouds
 							</span>
 							<p>{{ Forecast.Clouds }}</p>
 						</div>
-					</div>
-
-					<div class="row justify-content-center">
-						<div class="col-lg-2 weather-item rounded">
+						<div class="col-lg-4 col-md-4 col-sm-6 weather-item rounded">
 							<span>
 								<i class="fa fa-binoculars"></i> Visibility
 							</span>
 							<p>{{ Forecast.Visibility }}</p>
 						</div>
-						<div class="col-lg-3 weather-item rounded">
+						<div class="col-lg-4 col-md-4 col-sm-6 weather-item rounded">
 							<span>
 								<i class="fa fa-flag-o"></i> Wind
 							</span>
 							<p>{{ Forecast.Wind }}</p>
 						</div>
-						<div class="col-lg-3 weather-item rounded">
+						<div class="col-lg-4 col-md-4 col-sm-6 weather-item rounded">
 							<span>
 								<i class="fa fa-exclamation"></i> Other
 							</span>
@@ -208,25 +198,24 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
+	
+	<hr />
 </section>
 
 <!-- Charts Section -->
 <section id="charts" class="container content-section text-center">
+	<h2>Navigational Charts for {{ selectedAirport.icaoCode }}</h2>
 	<div class="row">
-		<div class="col-lg-8 col-lg-offset-2" ng-if="!charts">
-			<h2>Instrument Approach Procedures</h2>
-
+		<div class="col" ng-if="!charts">
 			<div class="alert alert-warning">
 				<p>No charts found for {{ selectedAirport.icaoCode }}!</p>
 			</div>
 		</div>
 
-		<div class="col-lg-8 col-lg-offset-2" ng-if="charts">
-		
-			<p>{{ charts.General.length }} general and {{ charts.Approach.length }} instrument approach charts are available for {{ selectedAirport.icaoCode }}</p>
+		<div class="col" ng-if="charts">
+			<p>{{ charts.General.length }} general and {{ charts.Approach.length }} instrument approach charts are available </p>
 
 			<div class="alert alert-warning">
 				<p>Warning - Not for real life navigation!</p>
@@ -242,7 +231,7 @@
 			<div class="tab-content">
 				<div class="container tab-pane fade in active" id="general">
 					<div class="row justify-content-center">
-						<div ng-repeat="chart in charts['General']" class="col-lg-5 col-md-4 col-sm-6 search-item">
+						<div ng-repeat="chart in charts['General']" class="col-lg-3 col-md-4 col-sm-6 search-item">
 							<a class="btn btn-default btn-lg" href="{{ chart.proxy }}"><span class="network-name">{{ chart.chartname }}</span></a>
 						</div>
 					</div>
@@ -250,7 +239,7 @@
 
 				<div class="container tab-pane fade" id="approach">
 					<div class="row justify-content-center">
-						<div ng-repeat="chart in charts['Approach']" class="col-lg-5 col-md-4 col-sm-6 search-item">
+						<div ng-repeat="chart in charts['Approach']" class="col-lg-3 col-md-4 col-sm-6 search-item">
 							<a class="btn btn-default btn-lg" href="{{ chart.proxy }}"><span class="network-name">{{ chart.chartname }}</span></a>
 						</div>
 					</div>
@@ -258,4 +247,6 @@
 			</div>
 		</div>
 	</div>
+	
+	<hr />
 </section>

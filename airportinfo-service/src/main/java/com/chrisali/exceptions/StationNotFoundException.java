@@ -1,8 +1,10 @@
 package com.chrisali.exceptions;
 
-import com.chrisali.model.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import com.chrisali.model.airportinfo.WeatherForecast;
+import com.chrisali.model.airportinfo.WeatherReport;
 
 @ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Weather Reporting Station Not Found") 
 public class StationNotFoundException extends Exception {

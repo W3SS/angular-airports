@@ -1,9 +1,9 @@
 package com.chrisali.utilities;
 
-import com.chrisali.model.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.lang.IllegalArgumentException;
 import java.io.IOException;
+
+import com.chrisali.model.airportinfo.AirportCharts;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class AirportChartsParserHelper {
 

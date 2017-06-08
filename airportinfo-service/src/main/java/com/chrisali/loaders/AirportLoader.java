@@ -1,7 +1,8 @@
 package com.chrisali.loaders;
 
-import com.chrisali.model.Airport;
-import com.chrisali.repositories.AirportRepository;
+import com.chrisali.model.airportinfo.Airport;
+import com.chrisali.repositories.airportinfo.AirportRepository;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

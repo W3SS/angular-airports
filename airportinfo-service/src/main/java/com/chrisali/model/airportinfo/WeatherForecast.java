@@ -1,4 +1,4 @@
-package com.chrisali.model;
+package com.chrisali.model.airportinfo;
 
 import java.util.List;
 import java.util.Map;

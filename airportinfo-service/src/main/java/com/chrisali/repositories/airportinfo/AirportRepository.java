@@ -1,9 +1,11 @@
-package com.chrisali.repositories;
+package com.chrisali.repositories.airportinfo;
 
-import com.chrisali.model.Airport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import com.chrisali.model.airportinfo.Airport;
+
 import java.util.List;
 
 public interface AirportRepository extends JpaRepository<Airport, Long> {
@@ -13,5 +15,10 @@ public interface AirportRepository extends JpaRepository<Airport, Long> {
 	*   @param searchQuery
 	*/
 	@Query("SELECT a from Airport a WHERE LOWER(a.airportName) LIKE LOWER(CONCAT('%', :searchQuery, '%')) OR LOWER(a.city) LIKE LOWER(CONCAT('%', :searchQuery, '%')) OR LOWER(a.country) LIKE LOWER(CONCAT('%', :searchQuery, '%')) OR LOWER(a.iataCode) LIKE LOWER(CONCAT('%', :searchQuery, '%')) OR LOWER(a.icaoCode) LIKE LOWER(CONCAT('%', :searchQuery, '%'))")
-	public List<Airport> find(@Param("searchQuery") String searchQuery);
+	public List<Airport> find(@Param(value = "searchQuery") String searchQuery);
+	
+	@SuppressWarnings("unchecked")
+	public Airport save(Airport airport);
+	
+	public void delete(Long id);
 }

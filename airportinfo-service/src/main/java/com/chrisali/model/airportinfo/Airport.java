@@ -1,4 +1,4 @@
-package com.chrisali.model;
+package com.chrisali.model.airportinfo;
 
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;

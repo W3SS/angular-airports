@@ -16,9 +16,4 @@ public interface AirportRepository extends JpaRepository<Airport, Long> {
 	*/
 	@Query("SELECT a from Airport a WHERE LOWER(a.airportName) LIKE LOWER(CONCAT('%', :searchQuery, '%')) OR LOWER(a.city) LIKE LOWER(CONCAT('%', :searchQuery, '%')) OR LOWER(a.country) LIKE LOWER(CONCAT('%', :searchQuery, '%')) OR LOWER(a.iataCode) LIKE LOWER(CONCAT('%', :searchQuery, '%')) OR LOWER(a.icaoCode) LIKE LOWER(CONCAT('%', :searchQuery, '%'))")
 	public List<Airport> find(@Param(value = "searchQuery") String searchQuery);
-	
-	@SuppressWarnings("unchecked")
-	public Airport save(Airport airport);
-	
-	public void delete(Long id);
 }

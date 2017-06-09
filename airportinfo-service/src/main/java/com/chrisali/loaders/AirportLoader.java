@@ -1,23 +1,28 @@
 package com.chrisali.loaders;
 
-import com.chrisali.model.airportinfo.Airport;
-import com.chrisali.repositories.airportinfo.AirportRepository;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.stereotype.Component;
+import org.springframework.core.Ordered;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Component;
+
+import com.chrisali.model.airportinfo.Airport;
+import com.chrisali.repositories.airportinfo.AirportRepository;
 
 @Component
-public class AirportLoader implements ApplicationListener<ContextRefreshedEvent> {
+public class AirportLoader implements ApplicationListener<ContextRefreshedEvent>, Ordered {
 	
+	@Override
+	public int getOrder() { return 0; }
+
 	@Autowired
 	private AirportRepository airportRepository;
 	

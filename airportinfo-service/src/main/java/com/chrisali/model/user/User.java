@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -20,11 +23,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
 @Table(name = "users")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@EqualsAndHashCode(exclude={"roles", "favorites", "reviews"})
 public class User {
 
 	@Id
@@ -40,7 +45,6 @@ public class User {
 	private String username;
 	
 	// TODO Encrypt and include special chars/numbers
-	@NotNull
 	@Length(min = 8, max = 16)
 	@Transient
 	private String rawPassword;
@@ -48,17 +52,22 @@ public class User {
 	@NotNull
 	private String password;
 	
-	@NotNull
-	private String role;
+	@Length(min = 8, max = 16)
+	@Transient
+	private String passwordConfirm;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "roles_id"))
+	private Set<Role> roles;
 	
 	private boolean isEnabled;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "airport", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Airport> favorites;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "review", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Review> reviews;
 	
 	/*

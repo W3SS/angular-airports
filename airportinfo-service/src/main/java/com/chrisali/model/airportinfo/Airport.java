@@ -1,6 +1,8 @@
 package com.chrisali.model.airportinfo;
 
 import javax.persistence.*;
+
+import com.chrisali.model.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -38,6 +40,11 @@ public class Airport {
 	private Float timeZone;
 	
 	private String tzTimeZone;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "users_id")
+	private User user;
 	
 	public Airport() {}
 }

@@ -28,7 +28,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@EqualsAndHashCode(exclude={"roles", "favorites", "reviews"}, callSuper=false)
+@EqualsAndHashCode(exclude={"roles", "favorites", "reviews", "comments"}, callSuper=false)
 public class User extends BaseUser {
 	
 	// TODO Encrypt and include special chars/numbers in bean validation
@@ -52,11 +52,11 @@ public class User extends BaseUser {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Review> reviews;
 	
-	/*
 	@JsonIgnore
-	@OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Comment> comments;
 		
+	/*
 	@JsonIgnore
 	@Size(max = 10)
 	//@OneToMany(mappedby = "airport", cascade = CascadeType.REMOVE)

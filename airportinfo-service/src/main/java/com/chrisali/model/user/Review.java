@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 
 @Data
@@ -30,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 @Table(name="reviews")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @RequiredArgsConstructor
+@EqualsAndHashCode(exclude={"comments"})
 public class Review {
 
 	@Id

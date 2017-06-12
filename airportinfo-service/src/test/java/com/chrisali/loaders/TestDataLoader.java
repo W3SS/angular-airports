@@ -19,11 +19,13 @@ import org.springframework.stereotype.Component;
 
 import com.chrisali.model.airportinfo.Airport;
 import com.chrisali.model.user.BaseUser;
+import com.chrisali.model.user.Comment;
 import com.chrisali.model.user.Review;
 import com.chrisali.model.user.Role;
 import com.chrisali.model.user.RoleType;
 import com.chrisali.model.user.User;
 import com.chrisali.repositories.airportinfo.AirportRepository;
+import com.chrisali.repositories.user.CommentRepository;
 import com.chrisali.repositories.user.ReviewRepository;
 import com.chrisali.repositories.user.RoleRepository;
 import com.chrisali.repositories.user.UserRepository;
@@ -47,6 +49,9 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 	@Autowired
 	private ReviewRepository reviewRepository;
 	
+	@Autowired
+	private CommentRepository commentRepository;
+	
 	private static Logger logger = LogManager.getLogger(TestDataLoader.class);
 
 	@Override
@@ -56,6 +61,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 		List<User> users = loadTestUsers(roles);
 		
 		loadTestReviews(users);
+		
+		loadTestComments(users);
 	}
 	
 	/**
@@ -162,6 +169,46 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 		logger.info(created + " test reviews created");
 		
 		return reviews;
+	}
+	
+	/**
+	 * Adds test comments to each review for each test user
+	 * 
+	 * @param users
+	 * @return total list of comments generated
+	 */
+	private List<Comment> loadTestComments(List<User> users) {
+		List<Comment> comments = new ArrayList<Comment>();
+		
+		List<Review> reviews = reviewRepository.findAll();
+		
+		for (User user : users) {
+			int count = 0;
+			logger.info("Creating test comments for user: " + user.getUsername());
+			
+			for (Review review : reviews) {
+				try {
+					Comment comment = new Comment(user, review);
+					comment.setText("This is a test comment for this review");
+					comment.setDatePosted(new Date());
+					
+					commentRepository.save(comment);
+					comments.add(comment);
+					
+					count++;
+				} catch (Exception e) {
+					logger.error("Error creating comment!", e);
+					continue;
+				}
+			}
+			
+			if (count == 0)
+				logger.warn("No comments were created for this user!");
+			else
+				logger.info("Created " + count + " comments");
+		}
+		
+		return comments;
 	}
 	
 	/**

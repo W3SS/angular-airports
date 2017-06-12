@@ -4,17 +4,11 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.persistence.Version;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -25,32 +19,22 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Subclass of BaseUser that adds relations for AngularAirports' reviews, favorites, comments, etc
+ * 
+ * @author Christopher Ali
+ *
+ */
 @Data
 @Entity
-@Table(name = "users")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@EqualsAndHashCode(exclude={"roles", "favorites", "reviews"})
-public class User {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+@EqualsAndHashCode(exclude={"roles", "favorites", "reviews"}, callSuper=false)
+public class User extends BaseUser {
 	
-	@Version
-	@JsonIgnore
-	private Long version;
-	
-	@NotNull
-	@Length(min = 5, max = 30)
-	private String username;
-	
-	// TODO Encrypt and include special chars/numbers
+	// TODO Encrypt and include special chars/numbers in bean validation
 	@Length(min = 8, max = 16)
 	@Transient
 	private String rawPassword;
-	
-	@NotNull
-	private String password;
 	
 	@Length(min = 8, max = 16)
 	@Transient
@@ -59,8 +43,6 @@ public class User {
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "roles_id"))
 	private Set<Role> roles;
-	
-	private boolean isEnabled;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

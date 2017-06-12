@@ -11,11 +11,13 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
 import com.chrisali.model.airportinfo.Airport;
+import com.chrisali.model.user.BaseUser;
 import com.chrisali.model.user.Review;
 import com.chrisali.model.user.Role;
 import com.chrisali.model.user.User;
@@ -24,6 +26,7 @@ import com.chrisali.repositories.user.ReviewRepository;
 import com.chrisali.repositories.user.UserRepository;
 
 @Component
+@Profile("test")
 public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent>, Ordered {
 
 	@Override
@@ -48,7 +51,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 	}
 	
 	/**
-	 * Adds test users based on their user roles
+	 * Adds test users, each having a separate and different role
 	 * 
 	 * @param userRoles
 	 */
@@ -85,7 +88,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 	private List<Review> loadTestReviews(List<User> users) {
 		List<Review> reviews = new ArrayList<>();
 		
-		for (User user : users) {
+		for (BaseUser user : users) {
 			logger.debug("Adding test reviews for user: " + user.getUsername());
 			
 			loadReviewsForUser(reviews, user);
@@ -94,7 +97,14 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 		return reviews;	
 	}
 	
-	private List<Review> loadReviewsForUser(List<Review> reviews, User user) {
+	/**
+	 * Adds 5 (for now) test reviews for a single user
+	 * 
+	 * @param reviews
+	 * @param user
+	 * @return a list of test reviews for a single user
+	 */
+	private List<Review> loadReviewsForUser(List<Review> reviews, BaseUser user) {
 		for (long i = 1L; i < 5L; i ++) {
 			try {
 				Review review = new Review(getOrCreateAirport(i));

@@ -17,6 +17,12 @@ import org.springframework.stereotype.Component;
 import com.chrisali.model.airportinfo.Airport;
 import com.chrisali.repositories.airportinfo.AirportRepository;
 
+/**
+ * Loads a list of Airport objects into a H2 database upon refreshing of context
+ * 
+ * @author Christopher Ali
+ *
+ */
 @Component
 public class AirportLoader implements ApplicationListener<ContextRefreshedEvent>, Ordered {
 	
@@ -58,6 +64,12 @@ public class AirportLoader implements ApplicationListener<ContextRefreshedEvent>
 		}
 	}
 	
+	/**
+	 * Parses a string array split from a read line of the airports.dat file, creates an Airport object, and finally inserts
+	 * it into the database 
+	 * 
+	 * @param splitLine
+	 */
 	private void parseAndInsert(String[] splitLine) {
 		if (splitLine != null) {
 			Airport airport = new Airport();

@@ -39,7 +39,7 @@ public class Review {
 	
 	@ManyToOne
 	@JoinColumn(name = "users_id")
-	private User user;
+	private BaseUser user;
 	
 	@ManyToOne
 	@JoinColumn(name = "airports_id")

@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -20,9 +21,11 @@ import com.chrisali.model.airportinfo.Airport;
 import com.chrisali.model.user.BaseUser;
 import com.chrisali.model.user.Review;
 import com.chrisali.model.user.Role;
+import com.chrisali.model.user.RoleType;
 import com.chrisali.model.user.User;
 import com.chrisali.repositories.airportinfo.AirportRepository;
 import com.chrisali.repositories.user.ReviewRepository;
+import com.chrisali.repositories.user.RoleRepository;
 import com.chrisali.repositories.user.UserRepository;
 
 @Component
@@ -36,6 +39,9 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 	private UserRepository userRepository;
 	
 	@Autowired
+	private RoleRepository roleRepository;
+	
+	@Autowired
 	private AirportRepository airportRepository;
 	
 	@Autowired
@@ -45,9 +51,37 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		List<User> users = loadTestUsers(Arrays.asList(new Role("free"), new Role("premium"), new Role("admin")));
+		Set<Role> roles = loadRoles();
+		
+		List<User> users = loadTestUsers(roles);
 		
 		loadTestReviews(users);
+	}
+	
+	/**
+	 * Creates and returns a set of roles that a user can have
+	 * 
+	 * @return
+	 */
+	private Set<Role> loadRoles() {
+		Set<Role> roles = new HashSet<Role>();
+		
+		logger.info("Creating user roles");
+		
+		for (RoleType roleType : RoleType.values()) {
+			try {			
+				Role role = new Role(roleType.toString().toLowerCase()); 
+				roleRepository.save(role);
+				roles.add(role);
+				
+			} catch (Exception e) {
+				logger.error("Error creating " + roleType.toString().toLowerCase() + " role!", e);
+				
+				continue;
+			}
+		}
+		
+		return roles;
 	}
 	
 	/**
@@ -55,7 +89,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 	 * 
 	 * @param userRoles
 	 */
-	private List<User> loadTestUsers(List<Role> userRoles) {
+	private List<User> loadTestUsers(Set<Role> userRoles) {
 		List<User> users = new ArrayList<>();
 		
 		for (Role role : userRoles) {
@@ -66,7 +100,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 				user.setPassword("t3st123!");
 				user.setRoles(new HashSet<Role>(Collections.unmodifiableList(Arrays.asList(role))));
 						
-				logger.debug("Adding test " + role.getName() + " user");
+				logger.info("Adding test " + role.getName() + " user");
 				
 				userRepository.save(user);
 				users.add(user);
@@ -89,7 +123,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 		List<Review> reviews = new ArrayList<>();
 		
 		for (BaseUser user : users) {
-			logger.debug("Adding test reviews for user: " + user.getUsername());
+			logger.info("Adding test reviews for user: " + user.getUsername());
 			
 			loadReviewsForUser(reviews, user);
 		}
@@ -105,7 +139,9 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 	 * @return a list of test reviews for a single user
 	 */
 	private List<Review> loadReviewsForUser(List<Review> reviews, BaseUser user) {
-		for (long i = 1L; i < 5L; i ++) {
+		int created = 0;
+		
+		for (long i = 1L; i < 6L; i++) {
 			try {
 				Review review = new Review(getOrCreateAirport(i));
 				review.setUser(user);
@@ -115,13 +151,15 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 			
 				reviewRepository.save(review);
 				reviews.add(review);
+				
+				created++;
 			} catch (Exception e) {
 				logger.error("Error adding review for user: " + user.getUsername() + "!", e);
 				continue;
 			}
 		}
 		
-		logger.debug(reviews.size() + " test reviews created");
+		logger.info(created + " test reviews created");
 		
 		return reviews;
 	}

@@ -40,7 +40,7 @@ public class User extends BaseUser {
 	@Transient
 	private String passwordConfirm;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "roles_id"))
 	private Set<Role> roles;
 	

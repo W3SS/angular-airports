@@ -1,4 +1,4 @@
-package com.chrisali.repositories.airportinfo;
+package com.chrisali.repositories.user;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.chrisali.model.airportinfo.Airport;
 import com.chrisali.model.user.Review;
 import com.chrisali.model.user.User;
+import com.chrisali.repositories.airportinfo.AirportRepository;
 import com.chrisali.repositories.user.ReviewRepository;
 import com.chrisali.repositories.user.UserRepository;
 
@@ -38,7 +39,7 @@ public class ReviewRepositoryTests {
 		
 		List<Review> reviews = reviewRepository.findByUserId(user.getId());
 		
-		assertEquals("5 reviews should be in database for this user", 5, reviews.size());
+		assertEquals("4 reviews should be in database for this user", 4, reviews.size());
 	}
 	
 	@Test

@@ -30,5 +30,5 @@ public class Role {
 	@ManyToMany(mappedBy = "roles", cascade = CascadeType.MERGE)
 	private Set<User> users;
 	
-	public Role() { name= "user"; }
+	public Role() { name = RoleType.FREE.toString().toLowerCase(); }
 }

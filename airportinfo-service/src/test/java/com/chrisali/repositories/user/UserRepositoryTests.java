@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.chrisali.model.user.Role;
+import com.chrisali.model.user.RoleType;
 import com.chrisali.model.user.User;
 import com.chrisali.repositories.user.UserRepository;
 
@@ -25,6 +26,9 @@ public class UserRepositoryTests {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private RoleRepository roleRepository;
 	
 	@Test
 	public void getUsersTest() {
@@ -52,7 +56,7 @@ public class UserRepositoryTests {
 		user.setEnabled(true);
 		
 		Set<Role> roles = new HashSet<Role>();
-		roles.add(new Role("free"));
+		roles.add(roleRepository.findByName(RoleType.FREE.toString().toLowerCase()));
 		user.setRoles(roles);
 		
 		userRepository.save(user);

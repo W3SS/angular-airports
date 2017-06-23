@@ -1,49 +1,27 @@
 package com.chrisali.configuration;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import com.chrisali.model.user.User;
-import com.chrisali.services.UserServiceImpl;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @Configuration
-public class SecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
-
-	@Autowired
-	private UserServiceImpl userService;
-	
-	@Bean
-	public BCryptPasswordEncoder bcryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+@EnableWebSecurity
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
-	public void init(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService());
-	}
-	
-	@Bean
-	UserDetailsService userDetailsService() {
-		return (username) -> { 
-			User user = userService.findByUsername(username);
-		
-			Set<GrantedAuthority> grantedAuthorites = new HashSet<>();
-			
-			user.getRoles().forEach(role -> {
-				grantedAuthorites.add(new SimpleGrantedAuthority(role.getName()));
-			});
-			
-			return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorites);
-		};
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests()
+				.antMatchers(HttpMethod.POST, "/login").permitAll()
+				.antMatchers(HttpMethod.POST, "/users/**").permitAll()
+				.antMatchers(HttpMethod.GET, "/weather/**", "/airports/**").permitAll()
+				.antMatchers(HttpMethod.POST, "/logout").authenticated()
+				.antMatchers(HttpMethod.DELETE, "/users/**").authenticated()
+				.antMatchers(HttpMethod.DELETE, "/airports/**").hasAnyAuthority("ROLE_PREMIUM", "ROLE_ADMIN")
+				.antMatchers(HttpMethod.POST, "/airports/**").hasAnyAuthority("ROLE_PREMIUM", "ROLE_ADMIN")
+				.anyRequest().fullyAuthenticated()
+			.and()
+				.httpBasic();
 	}
 }

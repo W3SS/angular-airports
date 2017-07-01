@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -20,13 +20,13 @@ import com.chrisali.model.user.Role;
 import com.chrisali.model.user.RoleType;
 import com.chrisali.model.user.User;
 
-@SpringBootTest//(classes = {SecurityConfiguration.class})
+@SpringBootTest//(classes = {SecurityConfiguration.class, AuthenticationConfiguration.class})
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
 public class UserServiceTests {
 
 	@Autowired
-	private UserServiceImpl userService;
+	private UserService userService;
 	
 	@Test
 	public void registerUserTest() {
@@ -82,13 +82,14 @@ public class UserServiceTests {
 		userService.enableDisableUser("does not exist", true);			
 	}
 	
-	@Test(expected = AuthenticationCredentialsNotFoundException.class)
+	@Test(expected = AccessDeniedException.class)
 	@WithMockUser("FREE")
 	public void enableUserNoAuthTest() {
 		enableUserTest();
 	}
 	
 	@Test(expected = UsernameNotFoundException.class)
+	@WithMockUser("ADMIN")
 	public void deleteUserTest() {		
 		assertTrue("User should have been successfully deleted from database", userService.deleteUser("free@test.com"));
 		

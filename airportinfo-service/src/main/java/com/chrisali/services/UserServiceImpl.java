@@ -77,14 +77,7 @@ public class UserServiceImpl implements UserService {
 		
 		return true;
 	}
-	
-	/**
-	 * Creates a set of roles based on the provided RoleType. Each role has a heiarchy of lower privileges it is granted. 
-	 * For example, Admin also has premium and free privileges, and premium also has free privileges 
-	 * 
-	 * @param roleName
-	 * @return set of roles
-	 */
+
 	public Set<Role> setRolesSet(RoleType roleName) {
 		Set<Role> roles = new HashSet<Role>();
 		
@@ -147,19 +140,8 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findByUsername(username) != null;
 	}
 	
-	/**
-	 * Attempts to find a user by its username 
-	 * 
-	 * @param username
-	 * @return
-	 * @throws UsernameNotFoundException if username is not found
-	 */
 	public User findByUsername(String username) {
-		User user = userRepository.findByUsername(username);
-		
-		if (user == null)
-			throw new UsernameNotFoundException("Could not find a user with the username: " + username);
-		
-		return user;
+		return userRepository.findByUsername(username)
+				.orElseThrow(() -> new UsernameNotFoundException("Could not find a user with the username: " + username));
 	}
 }

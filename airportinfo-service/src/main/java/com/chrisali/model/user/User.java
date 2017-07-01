@@ -55,7 +55,7 @@ public class User extends BaseUser {
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Comment> comments;
-		
+	
 	/*
 	@JsonIgnore
 	@Size(max = 10)
@@ -64,4 +64,12 @@ public class User extends BaseUser {
 	*/
 	
 	public User() {}
+	
+	public String getRolesAsString() {
+		StringBuilder sb = new StringBuilder();
+		
+		roles.forEach(r -> sb.append(r.getName()).append(", "));
+		
+		return sb.toString();
+	}
 }

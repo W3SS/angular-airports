@@ -1,12 +1,10 @@
 package com.chrisali.repositories.user;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.junit.Test;
@@ -18,7 +16,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.chrisali.model.user.Role;
 import com.chrisali.model.user.RoleType;
 import com.chrisali.model.user.User;
-import com.chrisali.repositories.user.UserRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -39,13 +36,13 @@ public class UserRepositoryTests {
 	
 	@Test
 	public void findSingleUserTest() {
-		User user = userRepository.findByUsername("free@test.com");
+		Optional<User> userOpt = userRepository.findByUsername("free@test.com");
 		
-		assertNotNull("User should exist in database", user);
+		assertTrue("User should exist in database", userOpt.isPresent());
 		
-		user = userRepository.findByUsername("doesnotexist@test.com");
+		userOpt = userRepository.findByUsername("doesnotexist@test.com");
 		
-		assertNull("User should not exist in database", user);
+		assertFalse("User should not exist in database", userOpt.isPresent());
 	}
 	
 	@Test
@@ -66,7 +63,7 @@ public class UserRepositoryTests {
 	
 	@Test
 	public void editUserTest() {
-		User user = userRepository.findByUsername("free@test.com");
+		User user = userRepository.findByUsername("free@test.com").get();
 		String newPass = "test123456!@#";
 		Long oldVersion = user.getVersion();
 		
@@ -74,7 +71,7 @@ public class UserRepositoryTests {
 		
 		userRepository.save(user);
 		
-		user = userRepository.findByUsername("free@test.com");
+		user = userRepository.findByUsername("free@test.com").get();
 		
 		assertEquals("Password should have been updated", newPass, user.getPassword());
 		

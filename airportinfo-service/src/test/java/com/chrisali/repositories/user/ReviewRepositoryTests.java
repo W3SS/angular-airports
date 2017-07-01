@@ -33,10 +33,8 @@ public class ReviewRepositoryTests {
 	
 	@Test
 	public void getReviewsForUserTest() {
-		User user = userRepository.findByUsername("free@test.com");
-		
-		assertNotNull("User should be in database", user);
-		
+		User user = userRepository.findByUsername("free@test.com").get();
+				
 		List<Review> reviews = reviewRepository.findByUserId(user.getId());
 		
 		assertEquals("4 reviews should be in database for this user", 4, reviews.size());
@@ -55,10 +53,8 @@ public class ReviewRepositoryTests {
 	
 	@Test
 	public void deleteReviewTest() {
-		User user = userRepository.findByUsername("free@test.com");
-		
-		assertNotNull("User should be in database", user);
-		
+		User user = userRepository.findByUsername("free@test.com").get();
+				
 		List<Review> reviews = reviewRepository.findByUserId(user.getId());
 		
 		int totalReviews = reviews.size();

@@ -14,14 +14,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.chrisali.model.user.Role;
 import com.chrisali.model.user.RoleType;
 import com.chrisali.model.user.User;
-import com.chrisali.services.UserServiceImpl;
+import com.chrisali.services.UserService;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class RoleRepositoryTests {
 
 	@Autowired
-	private UserServiceImpl userService;
+	private UserService userService;
 	
 	@Autowired
 	private RoleRepository roleRepository;

@@ -23,7 +23,7 @@ import com.chrisali.model.user.User;
 @SpringBootTest//(classes = {SecurityConfiguration.class})
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
-public class UserServiceImplTests {
+public class UserServiceTests {
 
 	@Autowired
 	private UserServiceImpl userService;

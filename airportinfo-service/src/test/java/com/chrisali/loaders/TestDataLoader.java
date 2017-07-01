@@ -27,7 +27,7 @@ import com.chrisali.repositories.user.CommentRepository;
 import com.chrisali.repositories.user.ReviewRepository;
 import com.chrisali.repositories.user.RoleRepository;
 import com.chrisali.repositories.user.UserRepository;
-import com.chrisali.services.UserServiceImpl;
+import com.chrisali.services.UserService;
 
 @Component
 @Profile("test")
@@ -40,7 +40,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 	private UserRepository userRepository;
 	
 	@Autowired
-	private UserServiceImpl userService;
+	private UserService userService;
 	
 	@Autowired
 	private RoleRepository roleRepository;

@@ -33,10 +33,8 @@ public class CommentRepositoryTests {
 	
 	@Test
 	public void getCommentsForUserTest() {
-		User user = userRepository.findByUsername("free@test.com");
-		
-		assertNotNull("User should be in database", user);
-		
+		User user = userRepository.findByUsername("free@test.com").get();
+				
 		List<Comment> comments = commentRepository.findByUserId(user.getId());
 		
 		assertEquals("15 reviews should be in database for this user", 15, comments.size());
@@ -55,10 +53,8 @@ public class CommentRepositoryTests {
 	
 	@Test
 	public void deleteReviewTest() {
-		User user = userRepository.findByUsername("free@test.com");
-		
-		assertNotNull("User should be in database", user);
-		
+		User user = userRepository.findByUsername("free@test.com").get();
+				
 		List<Comment> comments = commentRepository.findByUserId(user.getId());
 		
 		int totalComments = comments.size();

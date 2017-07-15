@@ -1,5 +1,7 @@
 package com.chrisali.configuration;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,6 +16,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 @EnableAuthorizationServer */
 public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
 	
+	private static final Logger log = LogManager.getLogger(OAuth2Configuration.class);
 	private static final String APPLICATION_NAME = "airportinfo";
 	
 	@Autowired
@@ -21,6 +24,10 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+		log.info("==================================");
+		log.info("Setting up Authentication Server");
+		log.info("==================================");
+		
 		endpoints.authenticationManager(new AuthenticationManager() {
 
 			@Override

@@ -59,8 +59,12 @@ public class User extends BaseUser {
 	/*
 	@JsonIgnore
 	@Size(max = 10)
-	//@OneToMany(mappedby = "airport", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedby = "airport", cascade = CascadeType.ALL)
 	private Set<Airport> history;   
+	
+	@JsonIgnore
+	@OneToMany(mappedby = "airport", cascade = CascadeType.ALL)
+	private Set<Airport> userAirports;
 	*/
 	
 	public User() {}

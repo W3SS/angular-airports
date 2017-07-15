@@ -20,7 +20,7 @@ import com.chrisali.model.user.Role;
 import com.chrisali.model.user.RoleType;
 import com.chrisali.model.user.User;
 
-@SpringBootTest//(classes = {SecurityConfiguration.class, AuthenticationConfiguration.class})
+@SpringBootTest
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
 public class UserServiceTests {
@@ -64,7 +64,7 @@ public class UserServiceTests {
 	}
 	
 	@Test(expected = UsernameNotFoundException.class)
-	@WithMockUser("ADMIN")
+	@WithMockUser(username = "admin", roles = "ADMIN")
 	public void enableUserTest() {
 		assertTrue("User should be enabled and saved", userService.enableDisableUser("free@test.com", true));
 		
@@ -83,13 +83,13 @@ public class UserServiceTests {
 	}
 	
 	@Test(expected = AccessDeniedException.class)
-	@WithMockUser("FREE")
+	@WithMockUser(username = "free", roles = "FREE")
 	public void enableUserNoAuthTest() {
 		enableUserTest();
 	}
 	
 	@Test(expected = UsernameNotFoundException.class)
-	@WithMockUser("ADMIN")
+	@WithMockUser(username = "admin", roles = "ADMIN")
 	public void deleteUserTest() {		
 		assertTrue("User should have been successfully deleted from database", userService.deleteUser("free@test.com"));
 		

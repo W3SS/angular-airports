@@ -14,7 +14,7 @@ public class AirportExceptionHandlers {
 	
 	private Logger logger = LoggerFactory.getLogger(ExceptionHandler.class);
 	
-	@ExceptionHandler(HttpMessageNotWritableException.class)
+	@ExceptionHandler({HttpMessageNotWritableException.class, NumberFormatException.class})
 	public ResponseEntity<ErrorInfo> handleException(HttpMessageNotWritableException ex) {
 		ErrorInfo info = new ErrorInfo();
 		info.setMessage("The service was unable to find the requested airport");

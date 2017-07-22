@@ -13,6 +13,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.Ordered;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.chrisali.model.airportinfo.Airport;
@@ -29,12 +30,24 @@ import com.chrisali.repositories.user.RoleRepository;
 import com.chrisali.repositories.user.UserRepository;
 import com.chrisali.services.UserService;
 
+/**
+ * Loads test user review and custom airport data into the database after {@link AirportLoader} runs 
+ * 
+ * @author christopher
+ *
+ */
 @Component
 @Profile("test")
 public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent>, Ordered {
 
+	/**
+	 * Call this loader after {@link AirportLoader}
+	 */
 	@Override
 	public int getOrder() { return 1; }
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -104,7 +117,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 				User user = new User();
 				user.setEnabled(true);
 				user.setUsername(roleType.toString().toLowerCase() + "@test.com");
-				user.setPassword("t3st123!");
+				user.setPassword(passwordEncoder.encode("T3st123#"));
 				user.setRoles(userService.setRolesSet(roleType));
 						
 				logger.info("Adding test " + roleType.toString().toLowerCase() + " user");

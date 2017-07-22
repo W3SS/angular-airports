@@ -31,7 +31,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(exclude={"roles", "favorites", "reviews", "comments"}, callSuper=false)
 public class User extends BaseUser {
 	
-	// TODO Encrypt and include special chars/numbers in bean validation
+	// TODO Include special chars/numbers in bean validation
 	@Length(min = 8, max = 16)
 	@Transient
 	private String rawPassword;
@@ -44,6 +44,7 @@ public class User extends BaseUser {
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "roles_id"))
 	private Set<Role> roles;
 	
+	//Hibernate-specific mapping Collection fields
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Airport> favorites;

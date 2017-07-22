@@ -38,6 +38,7 @@ public class BaseUser {
 	private String username;
 	
 	@NotNull
+	@Length(max = 75)
 	private String password;
 	
 	private boolean isEnabled;

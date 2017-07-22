@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -28,6 +29,9 @@ public class UserServiceTests {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@Test
 	public void registerUserTest() {
 		User user = new User();
@@ -38,6 +42,10 @@ public class UserServiceTests {
 		assertTrue("User should be registered successfully", userService.registerUser(user));
 		
 		assertTrue("User should exist in database", userService.usernameExists(user.getUsername()));
+		
+		User fromDatabase = userService.findByUsername(user.getUsername());
+		assertTrue("Password of user in database should equal password encrypted with encoder", 
+				passwordEncoder.matches(user.getRawPassword(), fromDatabase.getPassword()));
 		
 		user.setUsername("badUser@test.com");
 		user.setPassword("test123!@#");

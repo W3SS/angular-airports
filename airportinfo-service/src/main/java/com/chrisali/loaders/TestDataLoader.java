@@ -117,7 +117,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 				User user = new User();
 				user.setEnabled(true);
 				user.setUsername(roleType.toString().toLowerCase() + "@test.com");
-				user.setPassword(passwordEncoder.encode("T3st123#"));
+				user.setPassword(passwordEncoder.encode("T3st123"));
 				user.setRoles(userService.setRolesSet(roleType));
 						
 				logger.info("Adding test " + roleType.toString().toLowerCase() + " user");

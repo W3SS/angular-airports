@@ -1,5 +1,6 @@
 package com.chrisali.model.user;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,7 +39,7 @@ public class BaseUser {
 	private String username;
 	
 	@NotNull
-	@Length(max = 75)
+	@Column(name = "password", length = 75)
 	private String password;
 	
 	private boolean isEnabled;

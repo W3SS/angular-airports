@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.chrisali.model.user.Role;
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 	private RoleRepository roleRepository;
 	
 	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
 	
 	private Logger logger = LogManager.getLogger(UserServiceImpl.class);
 	
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 		
 		try {
 			user.setPassword(passwordEncoder.encode(user.getRawPassword()));
-			//user.setEnabled(false);
+			user.setEnabled(true);
 			
 			Role role = roleRepository.findByName(RoleType.FREE.toString().toLowerCase());
 			user.setRoles(new HashSet<Role>(Collections.unmodifiableList(Arrays.asList(role))));;

@@ -50,12 +50,9 @@ public class OAuth2Configuration {
 		
 		@Autowired
 		private AuthenticationManager authenticationManager;
-		
+				
 		@Autowired
-		private PasswordEncoder passwordEncoder;
-		
-		@Autowired
-		private UserDetailsService userDetailsSerivice;
+		private UserDetailsService userDetailsService;
 		
 		@Override
 		public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
@@ -64,16 +61,15 @@ public class OAuth2Configuration {
 			log.info("==================================");
 			
 			endpoints
-				.tokenStore(this.tokenStore)
-				.userDetailsService(this.userDetailsSerivice)
-				.authenticationManager(this.authenticationManager);
+				.tokenStore(tokenStore)
+				.userDetailsService(userDetailsService)
+				.authenticationManager(authenticationManager);
 		}
 						
 		@Override
 		public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 			security
-				.checkTokenAccess("isAuthenticated()")
-				.passwordEncoder(passwordEncoder);
+				.checkTokenAccess("isAuthenticated()");
 		}
 
 		@Override
@@ -93,7 +89,7 @@ public class OAuth2Configuration {
 		public DefaultTokenServices tokenServices() {
 			DefaultTokenServices tokenServices = new DefaultTokenServices();
 			tokenServices.setSupportRefreshToken(true);
-			tokenServices.setTokenStore(this.tokenStore);
+			tokenServices.setTokenStore(tokenStore);
 			tokenServices.setAccessTokenValiditySeconds(TOKEN_VALIDITY);
 			
 			return tokenServices;
@@ -103,6 +99,9 @@ public class OAuth2Configuration {
 	@Configuration
 	@EnableResourceServer
 	protected static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
+		
+		@Autowired
+		private AuthenticationManager authenticationManager;
 
 		@Override
 		public void configure(HttpSecurity http) throws Exception {
@@ -117,13 +116,14 @@ public class OAuth2Configuration {
 					.antMatchers(HttpMethod.DELETE, "/users/**").authenticated()
 					.antMatchers(HttpMethod.DELETE, "/airports/**").hasAnyAuthority("ROLE_PREMIUM", "ROLE_ADMIN")
 					.antMatchers(HttpMethod.POST, "/airports/**").hasAnyAuthority("ROLE_PREMIUM", "ROLE_ADMIN")
-					.anyRequest().authenticated();
+				.anyRequest().authenticated();
 		}
 
 		@Override
 		public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
 			resources
-				.resourceId(APPLICATION_NAME);
+				.resourceId(APPLICATION_NAME)
+				.authenticationManager(authenticationManager);
 		}
 	}
 	
@@ -131,7 +131,7 @@ public class OAuth2Configuration {
 	protected static class AuthenticationConfiguration extends GlobalAuthenticationConfigurerAdapter {
 
 		@Autowired
-		private UserDetailsService userDetailsSerivice;
+		private UserDetailsService userDetailsService;
 		
 		@Autowired
 		private PasswordEncoder passwordEncoder;
@@ -143,7 +143,7 @@ public class OAuth2Configuration {
 			log.info("==================================");
 			
 			auth
-				.userDetailsService(this.userDetailsSerivice)
+				.userDetailsService(userDetailsService)
 				.passwordEncoder(passwordEncoder);
 		}
 	}

@@ -9,6 +9,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -57,16 +58,13 @@ public class User extends BaseUser {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Comment> comments;
 	
-	/*
 	@JsonIgnore
-	@Size(max = 10)
-	@OneToMany(mappedby = "airport", cascade = CascadeType.ALL)
-	private Set<Airport> history;   
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<History> history;   
 	
 	@JsonIgnore
-	@OneToMany(mappedby = "airport", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Airport> userAirports;
-	*/
 	
 	public User() {}
 	

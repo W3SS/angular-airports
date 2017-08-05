@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import com.chrisali.model.user.BaseUser;
+import com.chrisali.model.user.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -59,6 +59,11 @@ public class Airport {
 	@ManyToOne
 	@JoinColumn(name = "users_id")
 	private BaseUser user;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "history_id")
+	private History history;
 		
 	public Airport() {}
 }
